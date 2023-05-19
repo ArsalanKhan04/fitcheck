@@ -1,11 +1,20 @@
 #include "User.h"
 
-User::User(std::string un, std::string pwd, std::string n, std::string e) {
-	username = un;
-	password = pwd;
-	name = n;
-	email = e; 
-    
+User::User() {
+    this->id = -1;
+    this->username = "";
+    this->password = "";
+    this->name = "";
+    this->email = "";
+
+    this->loggedin = false;
+
+	
+}
+
+void User::init(int id, const std::string& username, const std::string& password, const std::string& name, const std::string& email)
+{
+
     if (!isValidUsername(username)) {
         throw std::invalid_argument("Invalid username. Please provide a valid username.");
     }
@@ -21,8 +30,15 @@ User::User(std::string un, std::string pwd, std::string n, std::string e) {
     if (!isValidEmail(email)) {
         throw std::invalid_argument("Invalid email. Please provide a valid email address.");
     }
+    this->id = id;
+    this->username = username;
+    this->password = password;
+    this->name = name;
+    this->email = email;
+    this->loggedin = true;
 
-	
+
+
 }
 
 std::string User::getname() {
@@ -41,32 +57,32 @@ std::string User::getusername() {
 	return username;
 }
 
-void User::setemail(std::string email) {
+void User::setusername(const std::string& username) {
     if (!isValidUsername(username)) {
         throw std::invalid_argument("Invalid username. Please provide a valid username.");
     }
-	this->email = email;
+	this->username = username;
 }
 
-void User::setpassword(std::string password) {
+void User::setpassword(const std::string& password) {
     if (!isValidPassword(password)) {
         throw std::invalid_argument("Invalid password. Please provide a valid password.");
     }
 	this->password = password;
 }
 
-void User::setname(std::string name) {
+void User::setname(const std::string& name) {
     if (!isValidName(name)) {
         throw std::invalid_argument("Invalid name. Please provide a valid name.");
     }
 	this->name = name;
 }
 
-void User::setusername(std::string u) {
+void User::setemail(const std::string& email) {
     if (!isValidEmail(email)) {
         throw std::invalid_argument("Invalid email. Please provide a valid email address.");
     }
-	this->username = username;
+	this->email = email;
 }
 
 bool User::isValidUsername(const std::string& username) {
@@ -85,3 +101,6 @@ bool User::isValidEmail(const std::string& email) {
     std::regex emailRegex(R"([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})");
     return std::regex_match(email, emailRegex);
 }
+
+
+

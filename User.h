@@ -5,6 +5,8 @@
 class User
 {
 private:
+	int id;
+	bool loggedin;
 	std::string username;
 	std::string password;
 	std::string name;
@@ -18,11 +20,12 @@ public:
 	std::string getpassword();
 	std::string getname();
 	std::string getemail();
-	void setusername(std::string);
-	void setpassword(std::string);
-	void setname(std::string);
-	void setemail(std::string);
-	User(std::string username, std::string password, std::string name, std::string email);
+	void setusername(const std::string&);
+	void setpassword(const std::string&);
+	void setname(const std::string&);
+	void setemail(const std::string&);
+	User();
+	void init(int id, const std::string& username, const std::string& password, const std::string& name, const std::string& email);
 
 };
 

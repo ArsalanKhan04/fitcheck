@@ -1,5 +1,6 @@
 #pragma once
 #include <wx\wx.h>
+#include "MyApp.h"
 
 class FormEach {
 private:
@@ -50,7 +51,11 @@ class SignupFrame : public wxFrame
 private:
 	void login(wxCommandEvent&);
 	void signup(wxCommandEvent&);
+	void checkIfSignupValid(wxCommandEvent&);
+	void checkIfLoginValid(wxCommandEvent&);
 
+	wxStaticText* errorMessageSignup;
+	wxStaticText* errorMessageLogin;
 	FormEach* nameSignup;
 	FormEach* usernameSignup;
 	FormEach* passwordSignup;
@@ -58,8 +63,16 @@ private:
 	FormEach* emailSignup;
 	FormEach* usernameLogin;
 	FormEach* passwordLogin;
+	wxButton* signupButton;
+	wxButton* loginButton;
 
 public:
 	SignupFrame(const wxString& title);
+
+	void SetUser(int userId);
+	int CheckIfUser(const std::string& username);
+	int CheckIfValidUser(const std::string& username, const std::string& password);
+	void NewUser(const std::string& username, const std::string& password, const std::string& name, const std::string& email);
+
 };
 
