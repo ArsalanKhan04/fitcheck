@@ -154,6 +154,7 @@
     <None Include="fitcheck.db" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="camb_awbot_0000a.png" />
     <Image Include="cart.ico" />
     <Image Include="closet.ico" />
     <Image Include="ficon.ico" />

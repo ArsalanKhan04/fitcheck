@@ -63,5 +63,8 @@
     <Image Include="closet.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="camb_awbot_0000a.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
