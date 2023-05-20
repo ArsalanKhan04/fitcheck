@@ -5,7 +5,10 @@
 
 bool MyApp::OnInit()
 {
-	
+	// Initialising the image handler
+	wxImage::AddHandler(new wxPNGHandler);
+
+
 
 	// Create the main application window
 	SignupFrame* frame = new SignupFrame(wxT("Sign Up"));

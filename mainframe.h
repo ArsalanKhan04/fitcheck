@@ -6,7 +6,7 @@
 
 class ItemPages {
 public:
-	ItemPages(std::vector<Item>&);
+	ItemPages(std::vector<Item*>&, wxPanel* panel, wxSizer* sizer);
 private:
 
 };
