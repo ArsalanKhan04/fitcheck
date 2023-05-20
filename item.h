@@ -128,7 +128,7 @@ class Belts : public Accessory {
 public:
 	string name_type;
 	identification whatAmI() const;
-	type WhatType() const;
+	type WhatType() const; 
 	Belts(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
 };
 

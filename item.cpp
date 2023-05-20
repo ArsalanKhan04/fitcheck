@@ -68,6 +68,55 @@ identification Socks::whatAmI() const
 {
     return socks;
 }
+identification ActwearBottoms::whatAmI() const
+{
+    return bottom;
+}
+
+identification Belts::whatAmI() const
+{
+    return accessory;
+}
+
+identification CasualShirts::whatAmI() const
+{
+    return top;
+}
+
+identification Chinos::whatAmI() const
+{
+    return bottom;
+}
+
+identification DressPants::whatAmI() const
+{
+    return bottom;
+}
+
+identification Footwear::whatAmI() const
+{
+    return shoes;
+}
+
+identification Jeans::whatAmI() const
+{
+    return bottom;
+}
+
+identification PocketSquare::whatAmI() const
+{
+    return accessory;
+}
+
+identification Polos::whatAmI() const
+{
+    return top;
+}
+
+identification Shorts::whatAmI() const
+{
+    return bottom;
+}
 
 // Type Classification for derived items 
 
@@ -98,6 +147,55 @@ type Cufflinks::WhatType() const
 type Socks::WhatType() const
 {
     return misc;
+}
+type ActwearBottoms::WhatType() const
+{
+    return casual;
+}
+
+type Belts::WhatType() const
+{
+    return misc;
+}
+
+type CasualShirts::WhatType() const
+{
+    return casual;
+}
+
+type Chinos::WhatType() const
+{
+    return casual;
+}
+
+type DressPants::WhatType() const
+{
+    return formal;
+}
+
+type Footwear::WhatType() const
+{
+    return misc;
+}
+
+type Jeans::WhatType() const
+{
+    return semi_formal;
+}
+
+type PocketSquare::WhatType() const
+{
+    return formal;
+}
+
+type Polos::WhatType() const
+{
+    return semi_formal;
+}
+
+type Shorts::WhatType() const
+{
+    return casual;
 }
 
 // Constructors for Derived Classes
