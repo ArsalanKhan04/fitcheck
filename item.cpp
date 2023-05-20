@@ -185,3 +185,44 @@ Bottom::Bottom(const std::string& categoryValue, const std::string& idValue, int
 {
     //
 }
+
+// ActwearBottoms Class Constructor
+ActwearBottoms::ActwearBottoms(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type, const std::string& stuff)
+    : Bottom(category, id, price, brand, color, colorhex, imageLink), name_type(name_type), stuff(stuff) {}
+
+// Belts Class Constructor
+Belts::Belts(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type)
+    : Accessory(category, id, price, brand, color, colorhex, imageLink), name_type(name_type) {}
+
+// CasualShirts Class Constructor
+CasualShirts::CasualShirts(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type, const std::string& stuff)
+    : Top(category, id, price, brand, color, colorhex, imageLink), name_type(name_type), stuff(stuff) {}
+
+// Chinos Class Constructor
+Chinos::Chinos(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type, const std::string& stuff)
+    : Bottom(category, id, price, brand, color, colorhex, imageLink), name_type(name_type), stuff(stuff) {}
+
+// DressPants Class Constructor
+DressPants::DressPants(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type, const std::string& stuff, const std::string& fit)
+    : Bottom(category, id, price, brand, color, colorhex, imageLink), name_type(name_type), stuff(stuff), fit(fit) {}
+
+// Footwear Class Constructor
+Footwear::Footwear(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type)
+    : Accessory(category, id, price, brand, color, colorhex, imageLink), name_type(name_type) {}
+
+// Jeans Class Constructor
+Jeans::Jeans(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& name_type)
+    : Bottom(category, id, price, brand, color, colorhex, imageLink), name_type(name_type) {}
+
+// PocketSquare Class Constructor
+PocketSquare::PocketSquare(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink)
+    : Accessory(category, id, price, brand, color, colorhex, imageLink) {}
+
+// Polos Class Constructor
+Polos::Polos(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex,
+    const std::string& imageLink, const std::string& stuff, const std::string& name_type)
+    : Top(category, id, price, brand, color, colorhex, imageLink), stuff(stuff), name_type(name_type) {}
+
+// Shorts Class Constructor
+Shorts::Shorts(const std::string& category, const std::string& id, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink, const std::string& stuff, const std::string& name_type)
+    : Bottom(category, id, price, brand, color, colorhex, imageLink), stuff(stuff), name_type(name_type) {}
