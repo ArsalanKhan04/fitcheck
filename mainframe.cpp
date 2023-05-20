@@ -18,7 +18,7 @@ ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer
 	wxStaticText* productTitle;
 
 
-	for (const Item*& eachitem : itemvec) {
+	for (const Item* eachitem : itemvec) {
 		eachPanel = new wxPanel(viewPanel, wxID_ANY);
 		eachSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -115,7 +115,7 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	// -------------------------------------------
 	// Adding Panel to keep all the items
 	wxPanel* viewPanel = new wxPanel(totalViewPanel, wxID_ANY);
-	wxGridSizer* viewSizer = new wxGridSizer(8, 10, 10);
+	wxGridSizer* viewSizer = new wxGridSizer(5, 10, 10);
 
 
 	//defining the panel for each item
@@ -160,17 +160,25 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	individualViewPanel = new wxPanel(totalViewPanel, wxID_ANY);
 	individualViewSizer = new wxBoxSizer(wxVERTICAL);
 
+	individualImage = new wxImage("camb_awbot_0000a.png", wxBITMAP_TYPE_PNG);
+	individualImage->Rescale(300, 400);
+	individualBitmapImage = new wxBitmap(*individualImage);
+	individual_bitmap = new wxStaticBitmap(individualViewPanel, wxID_ANY, *individualBitmapImage);
+
+	individualViewSizer->Add(individual_bitmap, wxSizerFlags().Center().DoubleBorder());
+	individualProductTitle = new wxStaticText(individualViewPanel, wxID_ANY, wxT("Product Title"));
+	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center().TripleBorder());
+
+
+	individualViewPanel->SetSizer(individualViewSizer);
+	
 
 
 
 
 
-
-
-
-
-
-	totalViewSizer->Add(viewPanel, wxSizerFlags().Center().DoubleBorder());
+	totalViewSizer->Add(viewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
+	totalViewSizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
 	totalViewPanel->SetSizer(totalViewSizer);
 
 
