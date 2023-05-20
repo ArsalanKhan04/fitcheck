@@ -47,15 +47,11 @@ public:
 
 class Bottom : public Item {
 public:
-	virtual identification whatAmI() const;
-	virtual type WhatType() const;
 	Bottom(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
 };
 
 class Top : public Item {
 public:
-	virtual identification whatAmI() const;
-	virtual type WhatType() const;
 	Top(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
 };
 
