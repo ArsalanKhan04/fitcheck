@@ -1,6 +1,7 @@
 #include "signup.h"
 #include "MyApp.h"
 #include "User.h"
+#include "mainframe.h"
 #include <sqlite3.h>
 #include <wx\position.h>
 #include <wx\notebook.h>
@@ -156,7 +157,7 @@ void SignupFrame::login(wxCommandEvent&) {
     catch (std::exception ex) {
         errorMessageLogin->SetLabel(ex.what());
     }
-    errorMessageLogin->SetLabel(CurrentUser->getusername());
+    wxFrame::Close();
 }
 void SignupFrame::signup(wxCommandEvent&) {
     wxString username = usernameSignup->getData();
@@ -181,16 +182,18 @@ void SignupFrame::signup(wxCommandEvent&) {
         errorMessageSignup->SetLabel(wxT("Invalid!"));
         return;
     }
-    errorMessageSignup->SetLabel(CurrentUser->getusername());
+    wxFrame::Close();
 }
 
 
 SignupFrame::SignupFrame(const wxString& title) :
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(600,500))
 {
+    wxIcon icon;
+    icon.LoadFile("ficon.ico", wxBITMAP_TYPE_ICO);
+    this->SetIcon(icon);
 
 	wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
-	SetSizer(topSizer);
 	
 	// Signup And Login Notebook
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition);
@@ -244,6 +247,8 @@ SignupFrame::SignupFrame(const wxString& title) :
 	loginPanel->SetSizer(loginSizer);
 
 	topSizer->Add(notebook, wxSizerFlags().Center().CenterVertical().DoubleBorder());
+    SetSizer(topSizer);
+
 }
 
 
@@ -282,7 +287,11 @@ void SignupFrame::SetUser(int userId) {
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 
+    User* CurrentUser = new User;
     CurrentUser->init(userId, username, password, name, email);
+    MainFrame* mainframe = new MainFrame(wxT("FITcheck"), CurrentUser);
+    // Show it
+    mainframe->Show(true);
 }
 
 int SignupFrame::CheckIfUser(const std::string& username) {

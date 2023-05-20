@@ -53,4 +53,15 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="ficon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cart.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="closet.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

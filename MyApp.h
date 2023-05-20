@@ -3,7 +3,6 @@
 #include "User.h"
 
 
-extern User* CurrentUser;
 
 class MyApp: public wxApp
 {
