@@ -115,3 +115,82 @@ public:
 	type WhatType() const;
 	Socks(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
 };
+
+class ActwearBottoms : public Bottom {
+public:
+	string name_type, stuff;
+	identification whatAmI() const;
+	type WhatType() const;
+	ActwearBottoms(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+};
+
+class Belts : public Accessory {
+public:
+	string name_type;
+	identification whatAmI() const;
+	type WhatType() const;
+	Belts(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
+};
+
+class CasualShirts : public Top {
+public:
+	string name_type, stuff;
+	identification whatAmI() const;
+	type WhatType() const;
+	CasualShirts(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+};
+
+class Chinos : public Bottom {
+public:
+	string name_type, stuff;
+	identification whatAmI() const;
+	type WhatType() const;
+	Chinos(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+};
+
+class DressPants : public Bottom {
+public:
+	string name_type, stuff, fit;
+	identification whatAmI() const;
+	type WhatType() const;
+	DressPants(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&, const std::string&);
+};
+
+class Footwear : public Accessory {
+public:
+	string name_type;
+	identification whatAmI() const;
+	type WhatType() const;
+	Footwear(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
+};
+
+class Jeans : public Bottom {
+public:
+	string name_type;
+	identification whatAmI() const;
+	type WhatType() const;
+	Jeans(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
+};
+
+class PocketSquare : public Accessory {
+public:
+	identification whatAmI() const;
+	type WhatType() const;
+	PocketSquare(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+};
+
+class Polos : public Top {
+public:
+	string stuff, name_type;
+	identification whatAmI() const;
+	type WhatType() const;
+	Polos(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+};
+
+class Shorts : public Bottom {
+public:
+	string stuff, name_type;
+	identification whatAmI() const;
+	type WhatType() const;
+	Shorts(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+};
