@@ -1,6 +1,6 @@
 #include "item.h"
 using namespace std;
-Item::Item(const std::string& id, const std::string& product_title, int price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink) {
+Item::Item(const std::string& id, const std::string& product_title, const std::string& price, const std::string& brand, const std::string& color, int colorhex, const std::string& imageLink) {
     this->id = id;
     this->product_title = product_title;
     this->price = price;
@@ -18,7 +18,7 @@ std::string Item::getProductTitle() const {
     return product_title;
 }
 
-int Item::getPrice() const {
+std::string Item::getPrice() const {
     return price;
 }
 
@@ -103,7 +103,7 @@ type Socks::WhatType() const
 // Constructors for Derived Classes
 
 // FormalShirt
-FormalShirt::FormalShirt(const std::string& categoryValue, const std::string& idValue, int priceValue,
+FormalShirt::FormalShirt(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& fitValue, const std::string& stuffValue)
     : Top(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -113,7 +113,7 @@ FormalShirt::FormalShirt(const std::string& categoryValue, const std::string& id
 }
 
 // Accessory
-Accessory::Accessory(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Accessory::Accessory(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue)
     : Item(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -121,7 +121,7 @@ Accessory::Accessory(const std::string& categoryValue, const std::string& idValu
 }
 
 // Blazers
-Blazers::Blazers(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Blazers::Blazers(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& fitValue, const std::string& stuffValue)
     : Top(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -131,7 +131,7 @@ Blazers::Blazers(const std::string& categoryValue, const std::string& idValue, i
 }
 
 // Suit
-Suit::Suit(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Suit::Suit(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& fitValue, const std::string& stuffValue,
     const std::string& Name_typeValue)
@@ -143,7 +143,7 @@ Suit::Suit(const std::string& categoryValue, const std::string& idValue, int pri
 }
 
 // Tie
-Tie::Tie(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Tie::Tie(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& Name_typeValue)
     : Accessory(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -152,7 +152,7 @@ Tie::Tie(const std::string& categoryValue, const std::string& idValue, int price
 }
 
 // Cufflinks
-Cufflinks::Cufflinks(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Cufflinks::Cufflinks(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& Name_typeValue)
     : Accessory(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -161,7 +161,7 @@ Cufflinks::Cufflinks(const std::string& categoryValue, const std::string& idValu
 }
 
 // Socks
-Socks::Socks(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Socks::Socks(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue, const std::string& Name_typeValue, const std::string& stuffValue)
     : Accessory(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
@@ -171,7 +171,7 @@ Socks::Socks(const std::string& categoryValue, const std::string& idValue, int p
 }
 
 // top
-Top::Top(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Top::Top(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue) : Item(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
 {
@@ -179,7 +179,7 @@ Top::Top(const std::string& categoryValue, const std::string& idValue, int price
 }
 
 // bottom
-Bottom::Bottom(const std::string& categoryValue, const std::string& idValue, int priceValue,
+Bottom::Bottom(const std::string& categoryValue, const std::string& idValue, const std::string& priceValue,
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
     const std::string& imageLinkValue) : Item(categoryValue, idValue, priceValue, brandValue, colorValue, colorhexValue, imageLinkValue)
 {

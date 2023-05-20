@@ -22,20 +22,19 @@ enum type {
 
 class Item
 {
-	std::string category;
 	std::string id;
 	std::string product_title;
-	int price;
+	std::string price;
 	std::string brand;
 	std::string color;
 	int colorhex;
 	std::string imageLink;
 
 public:
-	Item(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+	Item(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
 	std::string getId() const;
 	std::string getProductTitle() const;
-	int getPrice() const;
+	std::string getPrice() const;
 	std::string getBrand() const;
 	std::string getColor() const;
 	int getColorHex() const;
@@ -49,14 +48,14 @@ class Bottom : public Item {
 public:
 	virtual identification whatAmI() const;
 	virtual type WhatType() const;
-	Bottom(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+	Bottom(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
 };
 
 class Top : public Item {
 public:
 	virtual identification whatAmI() const;
 	virtual type WhatType() const;
-	Top(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+	Top(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
 };
 
 class FormalShirt : public Top {
@@ -65,14 +64,14 @@ class FormalShirt : public Top {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	FormalShirt(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+	FormalShirt(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
 };
 
 class Accessory : public Item {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Accessory(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+	Accessory(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
 };
 
 class Blazers : public Top {
@@ -81,7 +80,7 @@ class Blazers : public Top {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Blazers(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+	Blazers(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
 };
 
 class Suit : public Top, public Bottom {
@@ -89,7 +88,7 @@ class Suit : public Top, public Bottom {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Suit(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&, const std::string&);
+	Suit(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&, const std::string&);
 };
 
 class Tie :public Accessory {
@@ -97,7 +96,7 @@ class Tie :public Accessory {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Tie(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	Tie(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
 };
 
 class Cufflinks : public Accessory {
@@ -105,7 +104,7 @@ class Cufflinks : public Accessory {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Cufflinks(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	Cufflinks(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
 };
 
 class Socks : public Accessory {
@@ -113,5 +112,5 @@ class Socks : public Accessory {
 public:
 	identification whatAmI() const;
 	type WhatType() const;
-	Socks(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+	Socks(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
 };
