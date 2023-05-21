@@ -2,12 +2,12 @@
 #include <wx\notebook.h>
 #include <wx\statline.h>
 
-
-ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer) {
+template <class T>
+ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel* panel, wxSizer* sizer) {
 	// Adding Panel to keep all the items
-	wxPanel* viewPanel = new wxPanel(panel, wxID_ANY);
-	wxGridSizer* viewSizer = new wxGridSizer(8, 10, 10);
-
+	wxScrolledWindow* viewPanel = new wxScrolledWindow(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 800));
+	wxGridSizer* viewSizer = new wxGridSizer(4, 10, 10);
+	viewPanel->SetBackgroundColour(wxColour(200, 200, 200));
 
 	//defining the panel for each item
 	wxPanel* eachPanel;
@@ -23,23 +23,25 @@ ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer
 		eachSizer = new wxBoxSizer(wxVERTICAL);
 
 		//Create a wxBitmap for image
-		image = new wxImage(eachitem->getImageLink(), wxBITMAP_TYPE_PNG);
+		image = new wxImage(eachitem->getImageLinks()[0], wxBITMAP_TYPE_PNG);
 		image->Rescale(100, 150);
 		bitmapImage = new wxBitmap(*image);
 		m_bitmap = new wxStaticBitmap(eachPanel, wxID_ANY, *bitmapImage);
 		// Adding it to the individual part
 		eachSizer->Add(m_bitmap, wxSizerFlags().Center().DoubleBorder());
 		// Add the Product Name
-		productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("" + eachitem->getProductTitle()));
+		productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("" + eachitem->getProductTitle()), wxDefaultPosition, wxSize(150, -1), wxALIGN_CENTRE_HORIZONTAL);
 		eachSizer->Add(productTitle, wxSizerFlags().Center().DoubleBorder());
 
-		eachPanel->SetBackgroundColour(wxColour(200, 200, 200));
+		eachPanel->SetBackgroundColour(wxColour(240, 240, 240));
 		eachPanel->SetSizer(eachSizer);
 
 
 		viewSizer->Add(eachPanel, wxSizerFlags().DoubleBorder());
 	}
 	
+	viewPanel->SetScrollbars(0, 10, 0, 10);
+
 	viewPanel->SetSizer(viewSizer);
 
 
@@ -48,9 +50,13 @@ ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer
 }
 
 
+
+
 MainFrame::MainFrame(const wxString& title, const User* user) :
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(1200,700))
 {
+
+	alldata = new Data;
 
 	// Adding the icon to the frame and the window
 	wxIcon icon;
@@ -113,38 +119,7 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	wxBoxSizer* totalViewSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// -------------------------------------------
-	// Adding Panel to keep all the items
-	wxPanel* viewPanel = new wxPanel(totalViewPanel, wxID_ANY);
-	wxGridSizer* viewSizer = new wxGridSizer(5, 10, 10);
-
-
-	//defining the panel for each item
-	wxPanel* eachPanel;
-	wxBoxSizer* eachSizer;
-	wxImage* image;
-	wxBitmap* bitmapImage;
-	wxStaticBitmap* m_bitmap;
-	wxStaticText* productTitle;
-
-
-	eachPanel = new wxPanel(viewPanel, wxID_ANY);
-	eachSizer = new wxBoxSizer(wxVERTICAL);
-
-	//Create a wxBitmap for image
-	image = new wxImage("camb_awbot_0000a.png", wxBITMAP_TYPE_PNG);
-	image->Rescale(100, 150);
-	bitmapImage = new wxBitmap(*image);
-	m_bitmap = new wxStaticBitmap(eachPanel, wxID_ANY, *bitmapImage);
-	// Adding it to the individual part
-	eachSizer->Add(m_bitmap, wxSizerFlags().Center().DoubleBorder());
-	// Add the Product Name
-	productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("Product Title"));
-	eachSizer->Add(productTitle, wxSizerFlags().Center().DoubleBorder());
-
-	eachPanel->SetBackgroundColour(wxColour(200, 200, 200));
-	eachPanel->SetSizer(eachSizer);
-	viewSizer->Add(eachPanel, wxSizerFlags().DoubleBorder());
-	viewPanel->SetSizer(viewSizer);
+	ItemPages* rightitems = new ItemPages(alldata->getBottoms(), totalViewPanel, totalViewSizer);
 
 	// ------------------------------------------------
 
@@ -177,7 +152,6 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 
 
 
-	totalViewSizer->Add(viewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
 	totalViewSizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
 	totalViewPanel->SetSizer(totalViewSizer);
 
