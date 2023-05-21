@@ -1,6 +1,6 @@
 #include "item.h"
 using namespace std;
-Item::Item(const std::string& id, const std::string& product_title, int price, const std::string& brand, const std::string& color, Color colorhex, const std::string& imageLink) {
+Item::Item(const std::string& id, const std::string& product_title, const std::string& price, const std::string& brand, const std::string& color, int colorhex) {
     this->id = id;
     this->product_title = product_title;
     this->price = price;
@@ -30,7 +30,7 @@ std::string Item::getColor() const {
     return color;
 }
 
-Color Item::getColorHex() const {
+int Item::getColorHex() const {
     return colorhex;
 }
 
@@ -49,7 +49,7 @@ void Item::addImageLink(const std::string& s) {
 
 identification FormalShirt::whatAmI() const
 {
-    return Formal_Shirt;
+    return top;
 }
 identification Accessory::whatAmI() const
 {
@@ -77,7 +77,7 @@ identification Socks::whatAmI() const
 }
 identification ActwearBottoms::whatAmI() const
 {
-    return Active_bottom;
+    return bottom;
 }
 
 identification Belts::whatAmI() const
@@ -87,17 +87,17 @@ identification Belts::whatAmI() const
 
 identification CasualShirts::whatAmI() const
 {
-    return Casual_shirt;
+    return top;
 }
 
 identification Chinos::whatAmI() const
 {
-    return chinos;
+    return bottom;
 }
 
 identification DressPants::whatAmI() const
 {
-    return Dress_pants;
+    return bottom;
 }
 
 identification Footwear::whatAmI() const
@@ -107,7 +107,7 @@ identification Footwear::whatAmI() const
 
 identification Jeans::whatAmI() const
 {
-    return jeans;
+    return bottom;
 }
 
 identification PocketSquare::whatAmI() const

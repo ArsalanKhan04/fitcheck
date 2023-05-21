@@ -142,9 +142,7 @@
     <ClCompile Include="mainframe.cpp" />
     <ClCompile Include="MyApp.cpp" />
     <ClCompile Include="signup.cpp" />
-    <ClCompile Include="test.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
@@ -153,7 +151,6 @@
     <ClInclude Include="MyApp.h" />
     <ClInclude Include="signup.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="Weight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fitcheck.db" />
