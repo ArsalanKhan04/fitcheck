@@ -192,7 +192,7 @@ class Item
 	std::string price;
 	std::string brand;
 	std::string color;
-	Color colorhex;
+	int colorhex;
 	std::string imageLink;
 	vector <std::string> imageLinks;
 
@@ -206,7 +206,7 @@ public:
 		return (double)this->colorhex - (double)I1.colorhex;
 	}
 	friend class Weight;
-	Item(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
+	Item(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int);
 	std::string getId() const;
 	std::string getProductTitle() const;
 	std::string getPrice() const;
