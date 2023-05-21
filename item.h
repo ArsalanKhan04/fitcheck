@@ -17,6 +17,24 @@ enum type {
 	semi_formal = 0003,
 	misc = 0004
 };
+enum appareltype {
+	app_suit = 16900,
+	app_formalshirts = 16901,
+	app_casualshirts = 16902,
+	app_polos = 16903,
+	app_blazers = 16904,
+	app_chinos = 16905,
+	app_jeans = 16906,
+	app_actwearbottoms = 16907,
+	app_dresspants = 16908,
+	app_shorts = 16909,
+	app_cufflinks = 16910,
+	app_socks = 16911,
+	app_pocketsquares = 16912,
+	app_ties = 16913,
+	app_belts = 16914,
+	app_footwears = 16915
+};
 
 
 

@@ -160,6 +160,7 @@
     <Image Include="cart.ico" />
     <Image Include="closet.ico" />
     <Image Include="ficon.ico" />
+    <Image Include="preview.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

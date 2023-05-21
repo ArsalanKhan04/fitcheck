@@ -40,7 +40,9 @@ void User::init(int id, const std::string& username, const std::string& password
 
 
 }
-
+int User::getid() {
+    return id;
+}
 std::string User::getname() {
 	return name;
 }

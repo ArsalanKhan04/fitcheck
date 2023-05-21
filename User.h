@@ -16,6 +16,7 @@ private:
 	bool isValidName(const std::string& name);
 	bool isValidEmail(const std::string& email);
 public:
+	int getid();
 	std::string getusername();
 	std::string getpassword();
 	std::string getname();
