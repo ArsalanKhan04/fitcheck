@@ -25,7 +25,7 @@ enum type {
 	semi_formal = 0003,
 	misc = 0004
 };
-enum class Color : uint32_t {
+enum Color {
 	d_brown = 0x654321,
 	sky_blue = 0x87CEEB,
 	light_black = 0x3A3A3A,
@@ -213,13 +213,13 @@ public:
 		return (double)this->colorhex - (double)I1.colorhex;
 	}
 	friend class Weight;
-	Item(const std::string&, const std::string&, int, const std::string&, const std::string&, Color, const std::string&);
+	Item(const std::string&, const std::string&, int, const std::string&, const std::string&, int, const std::string&);
 	std::string getId() const;
 	std::string getProductTitle() const;
 	std::string getPrice() const;
 	std::string getBrand() const;
 	std::string getColor() const;
-	Color getColorHex() const;
+	int getColorHex() const;
 	std::string getImageLink() const;
 
 	void addImageLink(const std::string&);

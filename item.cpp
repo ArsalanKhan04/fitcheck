@@ -219,8 +219,7 @@ FormalShirt::FormalShirt(const std::string& idValue, const std::string& product_
 
 // Accessory
 Accessory::Accessory(const std::string& idValue, const std::string& product_title, const std::string& priceValue,
-    const std::string& brandValue, const std::string& colorValue, int colorhexValue)
-    : Item( idValue, product_title, priceValue, brandValue, colorValue, colorhexValue)
+    const std::string& brandValue, const std::string& colorValue, int colorhexValue) : Item( idValue, product_title, priceValue, brandValue, colorValue, colorhexValue)
 {
 }
 
