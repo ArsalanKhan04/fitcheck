@@ -3,11 +3,77 @@
 #include <wx\statline.h>
 
 
-ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer) {
-	// Adding Panel to keep all the items
-	wxPanel* viewPanel = new wxPanel(panel, wxID_ANY);
-	wxGridSizer* viewSizer = new wxGridSizer(8, 10, 10);
+IndividualPage::IndividualPage(wxPanel* panel, wxSizer* sizer) {
+	individualViewPanel = new wxPanel(panel, wxID_ANY);
+	individualViewPanel->SetBackgroundColour(wxColour(230, 230, 230));
+	individualViewSizer = new wxBoxSizer(wxVERTICAL);
 
+	individualImage = new wxImage("preview.png", wxBITMAP_TYPE_PNG);
+	individualImage->Rescale(270, 350);
+	individualBitmapImage = new wxBitmap(*individualImage);
+	individual_bitmap = new wxStaticBitmap(individualViewPanel, wxID_ANY, *individualBitmapImage);
+
+	individualViewSizer->Add(individual_bitmap, wxSizerFlags().Center().DoubleBorder());
+	individualProductTitle = new wxStaticText(individualViewPanel, wxID_ANY, wxT("Product Title Here"), wxDefaultPosition, wxSize(250, -1), wxALIGN_CENTER_HORIZONTAL);
+	individualProductPrice = new wxStaticText(individualViewPanel, wxID_ANY, wxT("Product Price Here"), wxDefaultPosition, wxSize(250, -1), wxALIGN_CENTER_HORIZONTAL);
+	individualProductBrand = new wxStaticText(individualViewPanel, wxID_ANY, wxT("Product Brand here"), wxDefaultPosition, wxSize(250, -1), wxALIGN_CENTER_HORIZONTAL);
+
+	colorPanel = new wxPanel(individualViewPanel, wxID_ANY);
+	colorView = new wxBoxSizer(wxHORIZONTAL);
+	individualProductColor = new wxStaticText(colorPanel, wxID_ANY, wxT("Product Color"), wxDefaultPosition, wxSize(200, -1), wxALIGN_CENTER_HORIZONTAL);
+	wxImage image(20, 20);
+	image.SetRGB(wxRect(0, 0, 20, 20), 30, 30, 30);
+	wxBitmap bitmap(image);
+	individualProductColorImage = new wxStaticBitmap(colorPanel, wxID_ANY, bitmap);
+	colorView->Add(individualProductColor, wxSizerFlags().DoubleBorder().Center());
+	colorView->Add(individualProductColorImage, wxSizerFlags().DoubleBorder().Center());
+
+
+	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center().DoubleBorder());
+	individualViewSizer->Add(individualProductPrice, wxSizerFlags().Center().DoubleBorder());
+	individualViewSizer->Add(individualProductBrand, wxSizerFlags().Center().DoubleBorder());
+	individualViewSizer->Add(colorPanel, wxSizerFlags().Center().DoubleBorder());
+
+	individualViewPanel->SetSizer(individualViewSizer);
+	sizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
+
+}
+
+void IndividualPage::switchPage(const Item* item) {
+
+
+	wxImage* newImage = new wxImage(item->getImageLinks()[0], wxBITMAP_TYPE_PNG);
+	newImage->Rescale(270, 350);
+	wxBitmap newBitmap(*newImage);
+	individual_bitmap->SetBitmap(newBitmap);
+
+
+	individualProductTitle->SetLabel(item->getProductTitle());
+	individualProductPrice->SetLabel(item->getPrice());
+	individualProductBrand->SetLabel(item->getBrand());
+	individualProductColor->SetLabel(item->getColor());
+
+	int hex = item->getColorHex();
+	int red = (hex >> 16) & 0xFF;
+	int green = (hex >> 8) & 0xFF;
+	int blue = hex & 0xFF;
+	wxImage image(20, 20);
+	image.SetRGB(wxRect(0, 0, 20, 20), red, green, blue);
+	wxBitmap bitmap(image);
+
+	individualProductColorImage->SetBitmap(bitmap);
+	
+
+
+}
+
+
+template <class T>
+ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel* panel, wxSizer* sizer) {
+	// Adding Panel to keep all the items
+	wxScrolledWindow* viewPanel = new wxScrolledWindow(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 800));
+	wxGridSizer* viewSizer = new wxGridSizer(4, 10, 10);
+	viewPanel->SetBackgroundColour(wxColour(200, 200, 200));
 
 	//defining the panel for each item
 	wxPanel* eachPanel;
@@ -16,41 +82,66 @@ ItemPages::ItemPages(std::vector<Item*> &itemvec, wxPanel* panel, wxSizer* sizer
 	wxBitmap* bitmapImage;
 	wxStaticBitmap* m_bitmap;
 	wxStaticText* productTitle;
-
+	wxPanel* buttonPanel;
+	wxBoxSizer* buttonSizer;
+	wxButton* viewButton;
+	wxButton* addButton;
 
 	for (const Item* eachitem : itemvec) {
 		eachPanel = new wxPanel(viewPanel, wxID_ANY);
 		eachSizer = new wxBoxSizer(wxVERTICAL);
 
 		//Create a wxBitmap for image
-		image = new wxImage(eachitem->getImageLink(), wxBITMAP_TYPE_PNG);
+		image = new wxImage(eachitem->getImageLinks()[0], wxBITMAP_TYPE_PNG);
 		image->Rescale(100, 150);
 		bitmapImage = new wxBitmap(*image);
 		m_bitmap = new wxStaticBitmap(eachPanel, wxID_ANY, *bitmapImage);
 		// Adding it to the individual part
 		eachSizer->Add(m_bitmap, wxSizerFlags().Center().DoubleBorder());
 		// Add the Product Name
-		productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("" + eachitem->getProductTitle()));
+		productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("" + eachitem->getProductTitle()), wxDefaultPosition, wxSize(150, -1), wxALIGN_CENTRE_HORIZONTAL);
 		eachSizer->Add(productTitle, wxSizerFlags().Center().DoubleBorder());
+		// add a button
+		buttonPanel = new wxPanel(eachPanel, wxID_ANY);
+		buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+		viewButton = new wxButton(buttonPanel, wxID_ANY, wxT("View"));
+		viewButton->Bind(wxEVT_BUTTON, [this, eachitem] (wxCommandEvent& event) {
+			rightPage->switchPage(eachitem);
+			});
+		addButton = new wxButton(buttonPanel, wxID_ANY, wxT("Add"));
+		buttonSizer->Add(viewButton, wxSizerFlags().DoubleBorder());
+		buttonSizer->Add(addButton, wxSizerFlags().DoubleBorder());
+		buttonPanel->SetSizer(buttonSizer);
 
-		eachPanel->SetBackgroundColour(wxColour(200, 200, 200));
+		eachSizer->Add(buttonPanel);
+
+		eachPanel->SetBackgroundColour(wxColour(240, 240, 240));
 		eachPanel->SetSizer(eachSizer);
 
 
 		viewSizer->Add(eachPanel, wxSizerFlags().DoubleBorder());
 	}
 	
+	viewPanel->SetScrollbars(0, 10, 0, 10);
 	viewPanel->SetSizer(viewSizer);
 
 
 	//adding the whole view to the wardrobe
 	sizer->Add(viewPanel, wxSizerFlags().Expand().DoubleBorder());
+
+	rightPage = new IndividualPage(panel, sizer);
+
 }
+
+
 
 
 MainFrame::MainFrame(const wxString& title, const User* user) :
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(1200,700))
 {
+
+	alldata = new Data;
+	alldata->load();
 
 	// Adding the icon to the frame and the window
 	wxIcon icon;
@@ -113,72 +204,15 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	wxBoxSizer* totalViewSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// -------------------------------------------
-	// Adding Panel to keep all the items
-	wxPanel* viewPanel = new wxPanel(totalViewPanel, wxID_ANY);
-	wxGridSizer* viewSizer = new wxGridSizer(5, 10, 10);
-
-
-	//defining the panel for each item
-	wxPanel* eachPanel;
-	wxBoxSizer* eachSizer;
-	wxImage* image;
-	wxBitmap* bitmapImage;
-	wxStaticBitmap* m_bitmap;
-	wxStaticText* productTitle;
-
-
-	eachPanel = new wxPanel(viewPanel, wxID_ANY);
-	eachSizer = new wxBoxSizer(wxVERTICAL);
-
-	//Create a wxBitmap for image
-	image = new wxImage("camb_awbot_0000a.png", wxBITMAP_TYPE_PNG);
-	image->Rescale(100, 150);
-	bitmapImage = new wxBitmap(*image);
-	m_bitmap = new wxStaticBitmap(eachPanel, wxID_ANY, *bitmapImage);
-	// Adding it to the individual part
-	eachSizer->Add(m_bitmap, wxSizerFlags().Center().DoubleBorder());
-	// Add the Product Name
-	productTitle = new wxStaticText(eachPanel, wxID_ANY, wxT("Product Title"));
-	eachSizer->Add(productTitle, wxSizerFlags().Center().DoubleBorder());
-
-	eachPanel->SetBackgroundColour(wxColour(200, 200, 200));
-	eachPanel->SetSizer(eachSizer);
-	viewSizer->Add(eachPanel, wxSizerFlags().DoubleBorder());
-	viewPanel->SetSizer(viewSizer);
+	ItemPages* rightitems = new ItemPages(alldata->getBottoms(), totalViewPanel, totalViewSizer);
 
 	// ------------------------------------------------
 
 	// ------------------------------------------------
 	// Making Individual View here
-	wxPanel* individualViewPanel;
-	wxBoxSizer* individualViewSizer;
-	wxImage* individualImage;
-	wxBitmap* individualBitmapImage;
-	wxStaticBitmap* individual_bitmap;
-	wxStaticText* individualProductTitle;
-
-	individualViewPanel = new wxPanel(totalViewPanel, wxID_ANY);
-	individualViewSizer = new wxBoxSizer(wxVERTICAL);
-
-	individualImage = new wxImage("camb_awbot_0000a.png", wxBITMAP_TYPE_PNG);
-	individualImage->Rescale(300, 400);
-	individualBitmapImage = new wxBitmap(*individualImage);
-	individual_bitmap = new wxStaticBitmap(individualViewPanel, wxID_ANY, *individualBitmapImage);
-
-	individualViewSizer->Add(individual_bitmap, wxSizerFlags().Center().DoubleBorder());
-	individualProductTitle = new wxStaticText(individualViewPanel, wxID_ANY, wxT("Product Title"));
-	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center().TripleBorder());
-
-
-	individualViewPanel->SetSizer(individualViewSizer);
 	
 
-
-
-
-
-	totalViewSizer->Add(viewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
-	totalViewSizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
+	
 	totalViewPanel->SetSizer(totalViewSizer);
 
 
