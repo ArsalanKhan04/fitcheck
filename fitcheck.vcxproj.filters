@@ -1,18 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Data.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="mainframe.cpp" />
+    <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="signup.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyApp.cpp">
@@ -28,6 +24,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mainframe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Data.cpp">
@@ -50,30 +52,21 @@
     <ClInclude Include="mainframe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Weight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fitcheck.db">
-      <Filter>Resource Files</Filter>
-    </None>
+    <Image Include="camb_awbot_0000a.png" />
+    <Image Include="cart.ico" />
+    <Image Include="closet.ico" />
+    <Image Include="ficon.ico" />
+    <Image Include="preview.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="ficon.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="cart.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="closet.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="camb_awbot_0000a.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="preview.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <None Include="fitcheck.db" />
   </ItemGroup>
 </Project>
