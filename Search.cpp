@@ -1,5 +1,6 @@
 #include "Search.h"
 #include <iostream>
+#include <wx\wx.h>
 
 Outfit::Outfit() {
 	outfit_suit = nullptr;
@@ -179,17 +180,114 @@ void Outfit::addItem(Item* item) {
 
 }
 
-
-void Search::completeOutfit(int formal_type) {
+Search::Search() {
+    alldata = new Data;
     alldata->load();
+}
+
+std::vector <Outfit*> Search::completeOutfit(int formal_type) {
+
+    std::vector <Outfit*> outfitList;
     Outfit* eachoutfit;
-    Item* newsuit;
-    Item* newtop;
-    Item* newtie;
-    Item* newbelt;
-    Item* newcufflinks;
-    Item* newpocketsquare;
-    
+    vector <Item*> suits;
+    vector <Item*> bottoms;
+    vector <Item*> tops;
+    vector <Item*> blazers;
+    if (haveTop()) {
+        tops.push_back(getTop());
+    }
+    else {
+        for (Item* eachTop: alldata->getTops()) {
+            tops.push_back(eachTop);
+        }
+    }
+
+    if (formal_type == formal) {
+
+        if (haveSuit()) {
+            suits.push_back(getSuit());
+        }
+        else {
+            for (Item* eachSuit : alldata->getSuits()) {
+                suits.push_back(eachSuit);
+            }
+        }
+        for (Item* eachSuit : suits) {
+            for (Item* eachTop : tops) {
+                if (eachTop->WhatType() == formal) {
+                    eachoutfit = new Outfit();
+                    eachoutfit->setTop(eachTop);
+                    eachoutfit->setSuit(eachSuit);
+                    outfitList.push_back(eachoutfit);
+                }
+            }
+        }
+    }
+    else if (formal_type == semi_formal) {
+        if (haveBlazers()) {
+            blazers.push_back(getBlazers());
+        }
+        else {
+            for (Item* eachBlazer : alldata->getBlazers()) {
+                blazers.push_back(eachBlazer);
+            }
+        }
+        if (haveBottom()) {
+            bottoms.push_back(getBottom());
+        }
+        else {
+            for (Item* eachbottom : alldata->getBottoms()) {
+                bottoms.push_back(eachbottom);
+            }
+        }
+        for (Item* eachBlazer : blazers) {
+            for (Item* eachTop : tops) {
+                for (Item* eachBottom : bottoms) {
+                    if (eachTop->WhatType() == formal) {
+                        if (eachBottom->WhatType() == semi_formal) {
+                            eachoutfit = new Outfit();
+                            eachoutfit->setTop(eachTop);
+                            eachoutfit->setBlazers(eachBlazer);
+                            eachoutfit->setBottom(eachBottom);
+                            outfitList.push_back(eachoutfit);
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    else if (formal_type == casual) {
+        if (haveSuit()) {
+            bottoms.push_back(getBottom());
+        }
+        else {
+            for (Item* eachbottom : alldata->getBottoms()) {
+                bottoms.push_back(eachbottom);
+            }
+        }
+        for (Item* eachTop : tops) {
+            for (Item* eachBottom : bottoms) {
+                if (eachTop->WhatType() == formal) {
+                    if (eachBottom->WhatType() == casual) {
+                        eachoutfit = new Outfit();
+                        eachoutfit->setTop(eachTop);
+                        eachoutfit->setBottom(eachBottom);
+                        outfitList.push_back(eachoutfit);
+                    }
+                }
+            }
+        }
+    }
+    for (Outfit* x : outfitList) {
+        std::string message = x->getSuit()->getProductTitle();
+        message += " ";
+        message += x->getTop()->getProductTitle();
+        wxString wxMessage = wxString::FromUTF8(message.c_str());
+        wxLogMessage(wxMessage);
+    }
+    return outfitList;
+    /*
     for (Item* eachSuit : alldata->getSuits()){
         for (Item* eachTop : alldata->getTops()) {
             for (Item* eachtie: alldata->getTies()){
@@ -216,8 +314,9 @@ void Search::completeOutfit(int formal_type) {
             }
         }
     }
+    */
 }
-
+/*
 bool Search::compareContrast(Outfit* a, Outfit* b) {
     return a->calculateweight()->getContrast() < b->calculateweight()->getContrast();
 }
@@ -230,7 +329,7 @@ bool Search::compareMatch(Outfit* a, Outfit* b) {
 std::vector <Outfit*> Search::getOutfitList() const {
     return outfitList;
 }
-/*
+
 std::vector <Outfit*> Search::getOutfitListContrast() const {
     vector <Outfit*> newlist(outfitList);
     std::sort(newlist.begin(), newlist.end(), compareContrast);

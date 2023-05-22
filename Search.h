@@ -67,13 +67,13 @@ public:
 
 class Search: public Outfit
 {
-    std::vector <Outfit*> outfitList;
     Data* alldata;
-    bool compareContrast(Outfit*, Outfit*);
-    bool compareMatch(Outfit*, Outfit*);
+    //bool compareContrast(Outfit*, Outfit*);
+    // bool compareMatch(Outfit*, Outfit*);
 public:
-    void completeOutfit(int formal_type);
-    std::vector <Outfit*> getOutfitList() const;
+    std::vector <Outfit*> completeOutfit(int formal_type);
+    Search();
+    // std::vector <Outfit*> getOutfitList() const;
     // std::vector <Outfit*> getOutfitListContrast() const;
     // std::vector <Outfit*> getOutfitListMatch() const;
 };

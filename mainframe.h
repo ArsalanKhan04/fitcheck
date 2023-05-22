@@ -64,6 +64,7 @@ class SearchPage {
 public:
 	SearchPage(Search* search, wxPanel* panel, wxSizer* sizer);
 	void refreshSearch();
+	Search* getSearch();
 private:
 	Search* search;
 	EachElem* topsearch;

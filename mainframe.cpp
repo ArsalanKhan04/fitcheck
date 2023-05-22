@@ -118,9 +118,10 @@ ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel
 		}
 		else {
 			addButton = new wxButton(buttonPanel, wxID_ANY, wxT("Search"));
-			addButton->Bind(wxEVT_BUTTON, [this, eachitem, search](wxCommandEvent& event) {
+			addButton->Bind(wxEVT_BUTTON, [this, eachitem, search, addButton](wxCommandEvent& event) {
 				
 					search->addItem(eachitem);
+					addButton->SetLabel(wxT("Searched"));
 				
 				});
 		}
@@ -315,6 +316,10 @@ void SearchPage::refreshSearch() {
 		Item* pocketsquare = search->getPocketSquare();
 		pocketsquaresearch->switchPage(pocketsquare);
 	}
+}
+
+Search* SearchPage::getSearch() {
+	return search;
 }
 
 
@@ -556,12 +561,27 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 
 	// ================ SEARCH PAGE HERE ===============
 
-	wxButton* refresh = new wxButton(searchPanel, wxID_ANY, wxT("Refresh"));
-	searchSizer->Add(refresh, wxSizerFlags().DoubleBorder());
+	wxPanel* searchButtonPanel = new wxPanel(searchPanel, wxID_ANY);
+	wxBoxSizer* searchButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	wxButton* refresh = new wxButton(searchButtonPanel, wxID_ANY, wxT("Refresh"));
+	wxButton* complete = new wxButton(searchButtonPanel, wxID_ANY, wxT("Complete Outfit!"));
+	searchButtonSizer->Add(complete, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(refresh, wxSizerFlags().DoubleHorzBorder());
+	searchButtonPanel->SetSizer(searchButtonSizer);
+
+
+
+	searchSizer->Add(searchButtonPanel, wxSizerFlags().DoubleBorder());
 	searchpage = new SearchPage(search, searchPanel, searchSizer);
+
+	
 
 	refresh->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
 		searchpage->refreshSearch();
+		});
+
+	complete->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
+		search->completeOutfit(formal);
 		});
 
 	// Assigning sizers for each panel of the notebook
