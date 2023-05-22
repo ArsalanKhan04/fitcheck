@@ -3,7 +3,6 @@
 #include "MyApp.h"
 #include "item.h"
 #include "Data.h"
-#include "Search.h"
 
 class IndividualPage {
 public:
@@ -31,20 +30,12 @@ private:
 class ItemPages {
 public:
 	template <class T>
-	ItemPages(const std::vector<T*, std::allocator<T*>>& itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward, vector <Item*> searchpageitems);
+	ItemPages(const std::vector<T*, std::allocator<T*>>& itemvec, wxPanel* panel, wxSizer* sizer);
 private:
 	IndividualPage* rightPage;
 };
 
 
-wxPanel* eachElement(Item* item, wxPanel* parentPanel);
-
-class SearchPage {
-public:
-	SearchPage(Search* search, wxPanel* panel, wxSizer* sizer);
-private:
-
-};
 
 
 class MainFrame : public wxFrame
@@ -52,10 +43,6 @@ class MainFrame : public wxFrame
 public:
 	MainFrame(const wxString& title, const User* user);
 	Data* alldata;
-	Wardrobe* wardrobe;
-	Search* search;
-	SearchPage* searchpage;
-	vector<Item*> searchpageitems;
 private:
 
 };

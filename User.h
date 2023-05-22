@@ -16,11 +16,11 @@ private:
 	bool isValidName(const std::string& name);
 	bool isValidEmail(const std::string& email);
 public:
-	int getid() const;
-	std::string getusername() const;
-	std::string getpassword() const;
-	std::string getname() const;
-	std::string getemail() const;
+	int getid();
+	std::string getusername();
+	std::string getpassword();
+	std::string getname();
+	std::string getemail();
 	void setusername(const std::string&);
 	void setpassword(const std::string&);
 	void setname(const std::string&);

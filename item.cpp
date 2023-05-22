@@ -51,120 +51,80 @@ identification FormalShirt::whatAmI() const
 {
     return top;
 }
-int FormalShirt::getApparel() const {
-    return app_formalshirts;
-}
-
 identification Accessory::whatAmI() const
 {
     return accessory;
 }
-
 identification Blazers::whatAmI() const
 {
     return blazer;
-}
-int Blazers::getApparel() const {
-    return app_blazers;
 }
 identification Suit::whatAmI() const
 {
     return suit;
 }
-int Suit::getApparel() const {
-    return app_suit;
-}
 identification Tie::whatAmI() const
 {
     return accessory;
-}
-int Tie::getApparel() const {
-    return app_ties;
 }
 identification Cufflinks::whatAmI() const
 {
     return accessory;
 }
-int Cufflinks::getApparel() const {
-    return app_cufflinks;
-}
 identification Socks::whatAmI() const
 {
     return socks;
-}
-int Socks::getApparel() const {
-    return app_socks;
 }
 identification ActwearBottoms::whatAmI() const
 {
     return bottom;
 }
-int ActwearBottoms::getApparel() const {
-    return app_actwearbottoms;
-}
+
 identification Belts::whatAmI() const
 {
     return accessory;
 }
-int Belts::getApparel() const {
-    return app_belts;
-}
+
 identification CasualShirts::whatAmI() const
 {
     return top;
 }
-int CasualShirts::getApparel() const {
-    return app_chinos;
-}
+
 identification Chinos::whatAmI() const
 {
     return bottom;
 }
-int Chinos::getApparel() const {
-    return app_dresspants;
-}
+
 identification DressPants::whatAmI() const
 {
     return bottom;
 }
-int DressPants::getApparel() const {
-    return app_dresspants;
-}
+
 identification Footwear::whatAmI() const
 {
     return shoes;
 }
-int Footwear::getApparel() const {
-    return app_footwears;
-}
+
 identification Jeans::whatAmI() const
 {
     return bottom;
 }
-int Jeans::getApparel() const {
-    return app_formalshirts;
-}
+
 identification PocketSquare::whatAmI() const
 {
     return accessory;
 }
-int PocketSquare::getApparel() const {
-    return app_jeans;
-}
+
 identification Polos::whatAmI() const
 {
     return top;
 }
-int Polos::getApparel() const {
-    return app_polos;
-}
+
 identification Shorts::whatAmI() const
 {
     return bottom;
 }
-int Shorts::getApparel() const {
-    return app_shorts;
-}
+
 // Type Classification for derived items 
 
 type FormalShirt::WhatType() const
@@ -279,7 +239,7 @@ Suit::Suit(const std::string& idValue, const std::string& product_title, const s
     const std::string& brandValue, const std::string& colorValue, int colorhexValue,
      const std::string& fitValue, const std::string& stuffValue,
     const std::string& Name_typeValue)
-    :  Bottom( idValue, product_title, priceValue, brandValue, colorValue, colorhexValue)
+    : Top( idValue, product_title, priceValue, brandValue, colorValue, colorhexValue), Bottom( idValue, product_title, priceValue, brandValue, colorValue, colorhexValue)
 {
     fit = fitValue;
     stuff = stuffValue;

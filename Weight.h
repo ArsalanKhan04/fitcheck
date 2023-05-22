@@ -13,15 +13,6 @@ class Weight
 	
 public:
 	Weight(Item&, Item&);
-	Weight();
-	Weight(const Weight& other);
 
-	Weight operator+(const Weight& other) const;
-	Weight operator/(int num) const;
-	int getFormalWeight() const;
-	int getCasualWeight() const;
-	int getSemiFormalWeight() const;
-	int getMiscWeight() const;
-	int getContrast() const;
-	int getMatching() const;
+	
 };

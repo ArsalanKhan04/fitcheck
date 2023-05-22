@@ -33,12 +33,6 @@
     <ClCompile Include="Data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Weight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Search.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApp.h">
@@ -57,12 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Weight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Search.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,9 +73,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="preview.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="search.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

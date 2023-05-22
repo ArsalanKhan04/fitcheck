@@ -141,20 +141,16 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="mainframe.cpp" />
     <ClCompile Include="MyApp.cpp" />
-    <ClCompile Include="Search.cpp" />
     <ClCompile Include="signup.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="mainframe.h" />
     <ClInclude Include="MyApp.h" />
-    <ClInclude Include="Search.h" />
     <ClInclude Include="signup.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="Weight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fitcheck.db" />
@@ -165,7 +161,6 @@
     <Image Include="closet.ico" />
     <Image Include="ficon.ico" />
     <Image Include="preview.png" />
-    <Image Include="search.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
