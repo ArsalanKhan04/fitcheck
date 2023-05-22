@@ -43,50 +43,54 @@ IndividualPage::IndividualPage(wxPanel* panel, wxSizer* sizer) {
 
 void IndividualPage::switchPage(const Item* item) {
 
-
+	wxLogMessage(wxT("Reached Here 1"));
 	wxImage* newImage = new wxImage(item->getImageLinks()[0], wxBITMAP_TYPE_PNG);
 	newImage->Rescale(270, 350);
 	wxBitmap newBitmap(*newImage);
 	individual_bitmap->SetBitmap(newBitmap);
 
-
+	wxLogMessage(wxT("Reached Here 2"));
 	individualProductTitle->SetLabel(item->getProductTitle());
 	individualProductPrice->SetLabel(item->getPrice());
 	individualProductBrand->SetLabel(item->getBrand());
 	individualProductColor->SetLabel(item->getColor());
-
+	wxLogMessage(wxT("Reached Here 3"));
+	
 	int hex = item->getColorHex();
 	int red = (hex >> 16) & 0xFF;
 	int green = (hex >> 8) & 0xFF;
 	int blue = hex & 0xFF;
+
+	
 	wxImage image(20, 20);
+
 	image.SetRGB(wxRect(0, 0, 20, 20), red, green, blue);
 	wxBitmap bitmap(image);
-
+	wxLogMessage(wxT("Reached Here 4"));
 	individualProductColorImage->SetBitmap(bitmap);
-	
+	wxLogMessage(wxT("Reached Here 5"));
 
 
 }
 
 
 template <class T>
-ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward, vector <Item*> searchpageitems) {
+ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward) {
 	// Adding Panel to keep all the items
 	wxScrolledWindow* viewPanel = new wxScrolledWindow(panel, wxID_ANY, wxDefaultPosition, wxSize(-1, 800));
 	wxGridSizer* viewSizer = new wxGridSizer(4, 10, 10);
 	viewPanel->SetBackgroundColour(wxColour(200, 200, 200));
 
 	//defining the panel for each item
-	wxPanel* eachPanel;
-	wxBoxSizer* eachSizer;
-	wxImage* image;
-	wxBitmap* bitmapImage;
-	wxStaticBitmap* m_bitmap;
-	wxStaticText* productTitle;
-	wxPanel* buttonPanel;
-	wxBoxSizer* buttonSizer;
-	wxButton* viewButton;
+	wxPanel* eachPanel = nullptr;
+	wxBoxSizer* eachSizer = nullptr;
+	wxImage* image = nullptr;
+	wxBitmap* bitmapImage = nullptr;
+	wxStaticBitmap* m_bitmap = nullptr;
+	wxStaticText* productTitle = nullptr;
+	wxPanel* buttonPanel = nullptr;
+	wxBoxSizer* buttonSizer = nullptr;
+	wxButton* viewButton = nullptr;
 	wxButton* addButton = nullptr;
 
 	for (const T* eachitem : itemvec) {
@@ -107,7 +111,7 @@ ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel
 		buttonPanel = new wxPanel(eachPanel, wxID_ANY);
 		buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 		viewButton = new wxButton(buttonPanel, wxID_ANY, wxT("View"));
-		viewButton->Bind(wxEVT_BUTTON, [this, &eachitem] (wxCommandEvent& event) {
+		viewButton->Bind(wxEVT_BUTTON, [this, eachitem] (wxCommandEvent& event) {
 			rightPage->switchPage(eachitem);
 			});
 		if (ward != nullptr) {
@@ -116,6 +120,9 @@ ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel
 				ward->add(eachitem->getId(), eachitem->getApparel());
 				addButton->SetLabel(wxT("Added"));
 				});
+		}
+		else {
+			addButton = new wxButton(buttonPanel, wxID_ANY, wxT("Search"));
 		}
 		
 		buttonSizer->Add(viewButton, wxSizerFlags().DoubleBorder());
@@ -129,7 +136,7 @@ ItemPages::ItemPages(const std::vector<T*, std::allocator<T*>> &itemvec, wxPanel
 
 
 		viewSizer->Add(eachPanel, wxSizerFlags().DoubleBorder());
-		}
+	}
 	
 	
 	viewPanel->SetScrollbars(0, 10, 0, 10);
@@ -305,61 +312,61 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	// Bottoms
 	wxPanel* BottomWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* BottomWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* bottomwarditems = new ItemPages(wardrobe->getBottoms(), BottomWardPanel, BottomWardSizer, nullptr, searchpageitems);
+	ItemPages* bottomwarditems = new ItemPages(wardrobe->getBottoms(), BottomWardPanel, BottomWardSizer, nullptr);
 	BottomWardPanel->SetSizer(BottomWardSizer);
 
 	//Tops
 	wxPanel* TopWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* TopWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* topwarditems = new ItemPages(wardrobe->getTops(), TopWardPanel, TopWardSizer, nullptr, searchpageitems);
+	ItemPages* topwarditems = new ItemPages(wardrobe->getTops(), TopWardPanel, TopWardSizer, nullptr);
 	TopWardPanel->SetSizer(TopWardSizer);
 
 	//Ties
 	wxPanel* TieWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* TieWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* tiewarditems = new ItemPages(wardrobe->getTies(), TieWardPanel, TieWardSizer, nullptr, searchpageitems);
+	ItemPages* tiewarditems = new ItemPages(wardrobe->getTies(), TieWardPanel, TieWardSizer, nullptr);
 	TieWardPanel->SetSizer(TieWardSizer);
 
 	//Belts
 	wxPanel* BeltWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* BeltWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* beltwarditems = new ItemPages(wardrobe->getBelts(), BeltWardPanel, BeltWardSizer, nullptr, searchpageitems);
+	ItemPages* beltwarditems = new ItemPages(wardrobe->getBelts(), BeltWardPanel, BeltWardSizer, nullptr);
 	BeltWardPanel->SetSizer(BeltWardSizer);
 
 	//Cufflinks
 	wxPanel* CufflinkWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* CufflinkWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* cufflinkwarditems = new ItemPages(wardrobe->getCufflinks(), CufflinkWardPanel, CufflinkWardSizer, nullptr, searchpageitems);
+	ItemPages* cufflinkwarditems = new ItemPages(wardrobe->getCufflinks(), CufflinkWardPanel, CufflinkWardSizer, nullptr);
 	CufflinkWardPanel->SetSizer(CufflinkWardSizer);
 
 	//Blazers
 	wxPanel* BlazerWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* BlazerWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* blazerwarditems = new ItemPages(wardrobe->getBlazers(), BlazerWardPanel, BlazerWardSizer, nullptr, searchpageitems);
+	ItemPages* blazerwarditems = new ItemPages(wardrobe->getBlazers(), BlazerWardPanel, BlazerWardSizer, nullptr);
 	BlazerWardPanel->SetSizer(BlazerWardSizer);
 
 	//Socks
 	wxPanel* SockWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* SockWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* sockwarditems = new ItemPages(wardrobe->getSocks(), SockWardPanel, SockWardSizer, nullptr, searchpageitems);
+	ItemPages* sockwarditems = new ItemPages(wardrobe->getSocks(), SockWardPanel, SockWardSizer, nullptr);
 	SockWardPanel->SetSizer(SockWardSizer);
 
 	//Footwear
 	wxPanel* FootwearWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* FootwearWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* footwearitems = new ItemPages(wardrobe->getFootwears(), FootwearWardPanel, FootwearWardSizer, nullptr, searchpageitems);
+	ItemPages* footwearitems = new ItemPages(wardrobe->getFootwears(), FootwearWardPanel, FootwearWardSizer, nullptr);
 	FootwearWardPanel->SetSizer(FootwearWardSizer);
 
 	//PocketSquare
 	wxPanel* PocketsquareWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* PocketsquareWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* pocketsquarewarditems = new ItemPages(wardrobe->getPocketsquares(), PocketsquareWardPanel, PocketsquareWardSizer, nullptr, searchpageitems);
+	ItemPages* pocketsquarewarditems = new ItemPages(wardrobe->getPocketsquares(), PocketsquareWardPanel, PocketsquareWardSizer, nullptr);
 	PocketsquareWardPanel->SetSizer(PocketsquareWardSizer);
 
 	//Suit
 	wxPanel* SuitWardPanel = new wxPanel(choicepage, wxID_ANY);
 	wxBoxSizer* SuitWardSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* suitwarditems = new ItemPages(wardrobe->getSuits(), SuitWardPanel, SuitWardSizer, nullptr, searchpageitems);
+	ItemPages* suitwarditems = new ItemPages(wardrobe->getSuits(), SuitWardPanel, SuitWardSizer, nullptr);
 	SuitWardPanel->SetSizer(SuitWardSizer);
 
 	choicepage->AddPage(BottomWardPanel, "Bottoms");
@@ -385,61 +392,61 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 	// Bottoms
 	wxPanel* BottomAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* BottomAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* bottomAllitems = new ItemPages(alldata->getBottoms(), BottomAllPanel, BottomAllSizer, wardrobe, searchpageitems);
+	ItemPages* bottomAllitems = new ItemPages(alldata->getBottoms(), BottomAllPanel, BottomAllSizer, wardrobe);
 	BottomAllPanel->SetSizer(BottomAllSizer);
 
 	//Tops
 	wxPanel* TopAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* TopAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* topallitems = new ItemPages(alldata->getTops(), TopAllPanel, TopAllSizer, wardrobe, searchpageitems);
+	ItemPages* topallitems = new ItemPages(alldata->getTops(), TopAllPanel, TopAllSizer, wardrobe);
 	TopAllPanel->SetSizer(TopAllSizer);
 
 	//Ties
 	wxPanel* TieAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* TieAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* tieallitems = new ItemPages(alldata->getTies(), TieAllPanel, TieAllSizer, wardrobe, searchpageitems);
+	ItemPages* tieallitems = new ItemPages(alldata->getTies(), TieAllPanel, TieAllSizer, wardrobe);
 	TieAllPanel->SetSizer(TieAllSizer);
 
 	//Belts
 	wxPanel* BeltAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* BeltAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* beltallitems = new ItemPages(alldata->getBelts(), BeltAllPanel, BeltAllSizer, wardrobe, searchpageitems);
+	ItemPages* beltallitems = new ItemPages(alldata->getBelts(), BeltAllPanel, BeltAllSizer, wardrobe);
 	BeltAllPanel->SetSizer(BeltAllSizer);
 
 	//Cufflinks
 	wxPanel* CufflinkAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* CufflinkAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* cufflinkallitems = new ItemPages(alldata->getCufflinks(), CufflinkAllPanel, CufflinkAllSizer, wardrobe, searchpageitems);
+	ItemPages* cufflinkallitems = new ItemPages(alldata->getCufflinks(), CufflinkAllPanel, CufflinkAllSizer, wardrobe);
 	CufflinkAllPanel->SetSizer(CufflinkAllSizer);
 
 	//Blazers
 	wxPanel* BlazerAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* BlazerAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* blazerallitems = new ItemPages(alldata->getBlazers(), BlazerAllPanel, BlazerAllSizer, wardrobe, searchpageitems);
+	ItemPages* blazerallitems = new ItemPages(alldata->getBlazers(), BlazerAllPanel, BlazerAllSizer, wardrobe);
 	BlazerAllPanel->SetSizer(BlazerAllSizer);
 
 	//Socks
 	wxPanel* SockAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* SockAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* sockallitems = new ItemPages(alldata->getSocks(), SockAllPanel, SockAllSizer, wardrobe, searchpageitems);
+	ItemPages* sockallitems = new ItemPages(alldata->getSocks(), SockAllPanel, SockAllSizer, wardrobe);
 	SockAllPanel->SetSizer(SockAllSizer);
 
 	//Footwear
 	wxPanel* FootwearAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* FootwearAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* footwearallitems = new ItemPages(alldata->getFootwears(), FootwearAllPanel, FootwearAllSizer, wardrobe, searchpageitems);
+	ItemPages* footwearallitems = new ItemPages(alldata->getFootwears(), FootwearAllPanel, FootwearAllSizer, wardrobe);
 	FootwearAllPanel->SetSizer(FootwearAllSizer);
 
 	//PocketSquare
 	wxPanel* PocketsquareAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* PocketsquareAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* pocketsquareallitems = new ItemPages(alldata->getPocketsquares(), PocketsquareAllPanel, PocketsquareAllSizer, wardrobe, searchpageitems);
+	ItemPages* pocketsquareallitems = new ItemPages(alldata->getPocketsquares(), PocketsquareAllPanel, PocketsquareAllSizer, wardrobe);
 	PocketsquareAllPanel->SetSizer(PocketsquareAllSizer);
 
 	//Suit
 	wxPanel* SuitAllPanel = new wxPanel(choiceall, wxID_ANY);
 	wxBoxSizer* SuitAllSizer = new wxBoxSizer(wxHORIZONTAL);
-	ItemPages* suitallitems = new ItemPages(alldata->getSuits(), SuitAllPanel, SuitAllSizer, wardrobe, searchpageitems);
+	ItemPages* suitallitems = new ItemPages(alldata->getSuits(), SuitAllPanel, SuitAllSizer, wardrobe);
 	SuitAllPanel->SetSizer(SuitAllSizer);
 
 	choiceall->AddPage(BottomAllPanel, "Bottoms");

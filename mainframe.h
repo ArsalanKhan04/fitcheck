@@ -31,7 +31,7 @@ private:
 class ItemPages {
 public:
 	template <class T>
-	ItemPages(const std::vector<T*, std::allocator<T*>>& itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward, vector <Item*> searchpageitems);
+	ItemPages(const std::vector<T*, std::allocator<T*>>& itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward);
 private:
 	IndividualPage* rightPage;
 };
