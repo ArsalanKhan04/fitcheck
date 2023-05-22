@@ -141,6 +141,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="mainframe.cpp" />
     <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="ResultFrame.cpp" />
     <ClCompile Include="Search.cpp" />
     <ClCompile Include="signup.cpp" />
     <ClCompile Include="User.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="mainframe.h" />
     <ClInclude Include="MyApp.h" />
+    <ClInclude Include="ResultFrame.h" />
     <ClInclude Include="Search.h" />
     <ClInclude Include="signup.h" />
     <ClInclude Include="User.h" />

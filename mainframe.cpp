@@ -1,4 +1,5 @@
 #include "mainframe.h"
+#include "ResultFrame.h"
 #include <wx\notebook.h>
 #include <wx\choicebk.h>
 #include <wx\statline.h>
@@ -581,7 +582,8 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 		});
 
 	complete->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
-		search->completeOutfit(formal);
+		ResultFrame* resultframe = new ResultFrame("Results", search->completeOutfit(formal));
+		resultframe->Show(true);
 		});
 
 	// Assigning sizers for each panel of the notebook
