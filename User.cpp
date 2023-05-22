@@ -40,22 +40,22 @@ void User::init(int id, const std::string& username, const std::string& password
 
 
 }
-int User::getid() {
+int User::getid() const {
     return id;
 }
-std::string User::getname() {
+std::string User::getname()  const {
 	return name;
 }
 
-std::string User::getemail() {
+std::string User::getemail() const {
 	return email;
 }
 
-std::string User::getpassword() {
+std::string User::getpassword()  const {
 	return password;
 }
 
-std::string User::getusername() {
+std::string User::getusername()  const {
 	return username;
 }
 

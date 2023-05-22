@@ -74,6 +74,7 @@ public:
 
 	virtual identification whatAmI() const = 0;
 	virtual type WhatType() const = 0;
+	virtual int getApparel() const = 0;
 };
 
 class Bottom : public Item {
@@ -93,6 +94,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	FormalShirt(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Accessory : public Item {
@@ -109,14 +111,16 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Blazers(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
-class Suit : public Top, public Bottom {
+class Suit : public Bottom {
 	string fit, stuff, Name_type;
 public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Suit(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Tie :public Accessory {
@@ -125,6 +129,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Tie(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Cufflinks : public Accessory {
@@ -133,6 +138,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Cufflinks(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Socks : public Accessory {
@@ -141,6 +147,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Socks(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class ActwearBottoms : public Bottom {
@@ -149,6 +156,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	ActwearBottoms(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Belts : public Accessory {
@@ -157,6 +165,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const; 
 	Belts(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
+	virtual int getApparel() const;
 };
 
 class CasualShirts : public Top {
@@ -165,6 +174,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	CasualShirts(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Chinos : public Bottom {
@@ -173,6 +183,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Chinos(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class DressPants : public Bottom {
@@ -181,6 +192,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	DressPants(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Footwear : public Accessory {
@@ -189,6 +201,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Footwear(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Jeans : public Bottom {
@@ -197,6 +210,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Jeans(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&);
+	virtual int getApparel() const;
 };
 
 class PocketSquare : public Accessory {
@@ -204,6 +218,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	PocketSquare(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int);
+	virtual int getApparel() const;
 };
 
 class Polos : public Top {
@@ -212,6 +227,7 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Polos(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
 
 class Shorts : public Bottom {
@@ -220,4 +236,6 @@ public:
 	identification whatAmI() const;
 	type WhatType() const;
 	Shorts(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, int, const std::string&, const std::string&);
+	virtual int getApparel() const;
 };
+
