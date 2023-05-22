@@ -114,14 +114,14 @@ identification CasualShirts::whatAmI() const
     return top;
 }
 int CasualShirts::getApparel() const {
-    return app_chinos;
+    return app_casualshirts;
 }
 identification Chinos::whatAmI() const
 {
     return bottom;
 }
 int Chinos::getApparel() const {
-    return app_dresspants;
+    return app_chinos;
 }
 identification DressPants::whatAmI() const
 {
@@ -149,7 +149,7 @@ identification PocketSquare::whatAmI() const
     return accessory;
 }
 int PocketSquare::getApparel() const {
-    return app_jeans;
+    return app_pocketsquares;
 }
 identification Polos::whatAmI() const
 {

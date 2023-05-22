@@ -15,92 +15,86 @@ Outfit::Outfit() {
     outfittype = STFS;
 }
 
-void Outfit::setSuit(Suit* newSuit) {
-    if (outfit_bottom != nullptr || outfit_blazers != nullptr) {
-        throw std::invalid_argument("This outfit can not add a suit");
-    }
+void Outfit::setSuit(Item* newSuit) {
     outfit_suit = newSuit;
 }
 
-Suit* Outfit::getSuit() const {
+Item* Outfit::getSuit() const {
     return outfit_suit;
 }
 
-void Outfit::setBottom(Bottom* newBottom) {
-    if (outfit_suit != nullptr) {
-        throw std::invalid_argument("This outfit can not add a bottom");
-    }
+void Outfit::setBottom(Item* newBottom) {
     outfit_bottom = newBottom;
 }
 
-Bottom* Outfit::getBottom() const {
+Item* Outfit::getBottom() const {
     return outfit_bottom;
 }
 
-void Outfit::setTop(Top* newTop) {
+void Outfit::setTop(Item* newTop) {
     outfit_top = newTop;
 }
 
-Top* Outfit::getTop() const {
+Item* Outfit::getTop() const {
     return outfit_top;
 }
 
-void Outfit::setTie(Tie* newTie) {
+void Outfit::setTie(Item* newTie) {
     outfit_tie = newTie;
 }
 
-Tie* Outfit::getTie() const {
+Item* Outfit::getTie() const {
     return outfit_tie;
 }
 
-void Outfit::setBelts(Belts* newBelts) {
+void Outfit::setBelts(Item* newBelts) {
     outfit_belts = newBelts;
 }
 
-Belts* Outfit::getBelts() const {
+Item* Outfit::getBelts() const {
     return outfit_belts;
 }
 
-void Outfit::setCufflinks(Cufflinks* newCufflinks) {
+void Outfit::setCufflinks(Item* newCufflinks) {
     outfit_cufflinks = newCufflinks;
 }
 
-Cufflinks* Outfit::getCufflinks() const {
+Item* Outfit::getCufflinks() const {
     return outfit_cufflinks;
 }
 
-void Outfit::setBlazers(Blazers* newBlazers) {
+void Outfit::setBlazers(Item* newBlazers) {
     if (outfit_suit != nullptr) {
         throw std::invalid_argument("This outfit can not add a blazer");
     }
     outfit_blazers = newBlazers;
 }
 
-Blazers* Outfit::getBlazers() const {
+Item* Outfit::getBlazers() const {
     return outfit_blazers;
 }
 
-void Outfit::setSocks(Socks* newSocks) {
+void Outfit::setSocks(Item* newSocks) {
     outfit_socks = newSocks;
 }
 
-Socks* Outfit::getSocks() const {
+Item* Outfit::getSocks() const {
     return outfit_socks;
 }
 
-void Outfit::setFootwears(Footwear* newFootwears) {
+void Outfit::setFootwears(Item* newFootwears) {
     outfit_footwears = newFootwears;
 }
 
-Footwear* Outfit::getFootwears() const {
+Item* Outfit::getFootwears() const {
     return outfit_footwears;
 }
 
-void Outfit::setPocketSquare(PocketSquare* newPocketSquare) {
+void Outfit::setPocketSquare(Item* newPocketSquare) {
     outfit_pocketsquare = newPocketSquare;
 }
 
-PocketSquare* Outfit::getPocketSquare() const {
+Item* Outfit::getPocketSquare() const {
     return outfit_pocketsquare;
 }
 
@@ -150,37 +144,58 @@ bool Outfit::havePocketSquare() const {
     return !(outfit_pocketsquare == nullptr);
 }
 
-template <class T>
-void Outfit::addItem(const T* item) const {
+void Outfit::addItem(Item* item) {
     
-    if (item->WhatAmI() == top) {
+    if (item->whatAmI() == top) {
         setTop(item);
     }
-    else if (item->WhatAmI() == bottom) {
+    else if (item->whatAmI() == bottom) {
         setBottom(item);
     }
     else if (item->getApparel() == app_suit) {
         setSuit(item);
     }
+    else if (item->whatAmI() == blazer) {
+        setBlazers(item);
+    }
+    else if (item->whatAmI() == shoes) {
+        setFootwears(item);
+    }
+    else if (item->whatAmI() == socks) {
+        setSocks(item);
+    }
+    else if (item->getApparel() == app_belts) {
+        setBelts(item);
+    }
+    else if (item->getApparel() == app_cufflinks) {
+        setCufflinks(item);
+    }
+    else if (item->getApparel() == app_ties) {
+        setTie(item);
+    }
+    else if (item->getApparel() == app_pocketsquares) {
+        setPocketSquare(item);
+    }
+
 }
 
 
 void Search::completeOutfit(int formal_type) {
     alldata->load();
     Outfit* eachoutfit;
-    Suit* newsuit;
-    Top* newtop;
-    Tie* newtie;
-    Belts* newbelt;
-    Cufflinks* newcufflinks;
-    PocketSquare* newpocketsquare;
+    Item* newsuit;
+    Item* newtop;
+    Item* newtie;
+    Item* newbelt;
+    Item* newcufflinks;
+    Item* newpocketsquare;
     
-    for (Suit* eachSuit : alldata->getSuits()){
-        for (Top* eachTop : alldata->getTops()) {
-            for (Tie* eachtie: alldata->getTies()){
-                for (Belts* eachbelt : alldata->getBelts()) {
-                    for (Cufflinks* eachcufflink : alldata->getCufflinks()) {
-                        for (PocketSquare* eachpocketsquare : alldata->getPocketsquares()) {
+    for (Item* eachSuit : alldata->getSuits()){
+        for (Item* eachTop : alldata->getTops()) {
+            for (Item* eachtie: alldata->getTies()){
+                for (Item* eachbelt : alldata->getBelts()) {
+                    for (Item* eachcufflink : alldata->getCufflinks()) {
+                        for (Item* eachpocketsquare : alldata->getPocketsquares()) {
                             newsuit = haveSuit() ? getSuit() : eachSuit;
                             newtop = haveTop() ? getTop() : eachTop;
                             newtie = haveTie() ? getTie() : eachtie;

@@ -14,43 +14,42 @@ enum outfittype {
 class Outfit
 {
 private:
-	Suit* outfit_suit;
-	Bottom* outfit_bottom;
-	Top* outfit_top;
-	Tie* outfit_tie;
-	Belts* outfit_belts;
-	Cufflinks* outfit_cufflinks;
-	Blazers* outfit_blazers;
-	Socks* outfit_socks;
-	Footwear* outfit_footwears;
-	PocketSquare* outfit_pocketsquare;
+	Item* outfit_suit;
+	Item* outfit_bottom;
+	Item* outfit_top;
+	Item* outfit_tie;
+	Item* outfit_belts;
+	Item* outfit_cufflinks;
+	Item* outfit_blazers;
+	Item* outfit_socks;
+	Item* outfit_footwears;
+	Item* outfit_pocketsquare;
     int outfittype;
 public:
 	Outfit();
-    void setSuit(Suit* newSuit);
-    Suit* getSuit() const;
-    void setBottom(Bottom* newBottom);
-    Bottom* getBottom() const;
-    void setTop(Top* newTop);
-    Top* getTop() const;
-    void setTie(Tie* newTie);
-    Tie* getTie() const;
-    void setBelts(Belts* newBelts);
-    Belts* getBelts() const;
-    void setCufflinks(Cufflinks* newCufflinks);
-    Cufflinks* getCufflinks() const;
-    void setBlazers(Blazers* newBlazers);
-    Blazers* getBlazers() const;
-    void setSocks(Socks* newSocks);
-    Socks* getSocks() const;
-    void setFootwears(Footwear* newFootwears);
-    Footwear* getFootwears() const;
-    void setPocketSquare(PocketSquare* newPocketSquare);
-    PocketSquare* getPocketSquare() const;
+    void setSuit(Item* newSuit);
+    Item* getSuit() const;
+    void setBottom(Item* newBottom);
+    Item* getBottom() const;
+    void setTop(Item* newTop);
+    Item* getTop() const;
+    void setTie(Item* newTie);
+    Item* getTie() const;
+    void setBelts(Item* newBelts);
+    Item* getBelts() const;
+    void setCufflinks(Item* newCufflinks);
+    Item* getCufflinks() const;
+    void setBlazers(Item* newBlazers);
+    Item* getBlazers() const;
+    void setSocks(Item* newSocks);
+    Item* getSocks() const;
+    void setFootwears(Item* newFootwears);
+    Item* getFootwears() const;
+    void setPocketSquare(Item* newPocketSquare);
+    Item* getPocketSquare() const;
     Weight* calculateweight();
 
-    template <class T>
-    void addItem(const T*) const;
+    void addItem(Item*);
 
 
     bool haveSuit() const;
