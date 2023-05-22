@@ -21,7 +21,7 @@ const std::vector<Tie*>& Data::getTies() const
 	return ties;
 }
 
-const std::vector<Accessory*>& Data::getBelts() const
+const std::vector<Belts*>& Data::getBelts() const
 {
 	return belts;
 }
@@ -445,24 +445,44 @@ void Data::load() {
 	}
 
 }
-
-
-void Wardrobe::load() {
-
+void Data::unload() {
+	bottoms.clear();
+	tops.clear();
+	ties.clear();
+	belts.clear();
+	cufflinks.clear();
+	blazers.clear();
+	socks.clear();
+	footwears.clear();
+	pocketsquares.clear();
+	suits.clear();
 }
 
-void Wardrobe::load(User* user) {
+void Wardrobe::load() {
+	wxMessageDialog alert(nullptr, "USE LOAD WITH User!", "Error");
+	alert.ShowModal();
+}
+
+void Wardrobe::load(const User* user) {
+	user_id = user->getid();
+	this->user = user;
 	try {
 		// Getting data into act wear bottoms
 		sqlite::database db("fitcheck.db");
 
 		// Getting Suit Ids
 		int x;
+		std::string product_id;
 		for (x = app_suit; x <= app_footwears; x+=1) {
+			wxString currnum;
+			currnum << x;
+			wxString currid;
+			currid << user_id;
 			db << "SELECT product_id FROM wardrobe WHERE user_id = ? AND type = ?;"
 				<< user->getid()
-				<< appareltype::app_suit
-				>> [&](std::string product_id) {
+				<< x
+				>> [&](std::string retrieved_id) {
+				product_id = retrieved_id;
 				if (x == app_suit){
 					std::string condition = "suit_id = '" + product_id + "'";
 					loadSuits(db, condition);
@@ -513,11 +533,11 @@ void Wardrobe::load(User* user) {
 				}
 				else if (x == app_pocketsquares) {
 					std::string condition = "pocketsquare_id = '" + product_id + "'";
-					loadSocks(db, condition);
+					loadPocketSquares(db, condition);
 				}
 				else if (x == app_ties) {
 					std::string condition = "tie_id = '" + product_id + "'";
-					loadSocks(db, condition);
+					loadTies(db, condition);
 				}
 				else if (x == app_belts) {
 					std::string condition = "belt_id = '" + product_id + "'";
@@ -530,22 +550,6 @@ void Wardrobe::load(User* user) {
 			};
 		}
 		
-		// Getting FormalShirts Ids
-		loadFormalShirts(db, "true");
-		loadCasualShirts(db, "true");
-		loadPolos(db, "true");
-		loadBlazers(db, "true");
-		loadChinos(db, "true");
-		loadJeans(db, "true");
-		loadActwearBottoms(db, "true");
-		loadDressPants(db, "true");
-		loadShorts(db, "true");
-		loadCufflinks(db, "true");
-		loadSocks(db, "true");
-		loadPocketSquares(db, "true");
-		loadTies(db, "true");
-		loadBelts(db, "true");
-		loadFootwears(db, "true");
 
 	}
 	catch (const sqlite::sqlite_exception& e) {
@@ -566,3 +570,33 @@ void Wardrobe::load(User* user) {
 		alert.ShowModal();
 	}
 }
+
+void Wardrobe::add(const std::string& product_id, int product_type) {
+	try {
+		sqlite::database db("fitcheck.db");
+		db << "INSERT INTO wardrobe (user_id, type, product_id) VALUES (?, ?, ?);"
+			<< user_id
+			<< product_type
+			<< product_id;
+	}
+	catch (const sqlite::sqlite_exception& e) {
+		wxString errorMsg = wxString::FromUTF8(e.what());
+		wxString sqlStatement = wxString::FromUTF8(e.get_sql());
+
+		wxMessageDialog alert(nullptr, errorMsg, "Error");
+		alert.ShowModal();
+
+
+		wxMessageDialog alert3(nullptr, sqlStatement, "Error");
+		alert3.ShowModal();
+
+	}
+
+	catch (const exception& e) {
+		wxMessageDialog alert(nullptr, e.what(), "Error");
+		alert.ShowModal();
+	}
+	this->unload();
+	this->load(user);
+}
+

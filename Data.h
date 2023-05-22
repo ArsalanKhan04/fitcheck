@@ -11,12 +11,12 @@ private:
 	std::vector<Bottom*> bottoms;
 	std::vector<Top*> tops;
 	std::vector<Tie*> ties;
-	std::vector<Accessory*> belts; // TO be changed
+	std::vector<Belts*> belts;
 	std::vector<Cufflinks*> cufflinks;
 	std::vector<Blazers*> blazers;
 	std::vector<Socks*> socks;
-	std::vector<Footwear*> footwears; // TO be changed
-	std::vector<PocketSquare*> pocketsquares; // To be changed
+	std::vector<Footwear*> footwears;
+	std::vector<PocketSquare*> pocketsquares;
 	std::vector<Suit*> suits;
 
 public:
@@ -43,11 +43,12 @@ public:
 
 
 	void load();
+	void unload();
 	// Getter functions
 	const std::vector<Bottom*>& getBottoms() const;
 	const std::vector<Top*>& getTops() const;
 	const std::vector<Tie*>& getTies() const;
-	const std::vector<Accessory*>& getBelts() const;
+	const std::vector<Belts*>& getBelts() const;
 	const std::vector<Cufflinks*>& getCufflinks() const;
 	const std::vector<Blazers*>& getBlazers() const;
 	const std::vector<Socks*>& getSocks() const;
@@ -58,7 +59,11 @@ public:
 };
 
 class Wardrobe :public Data {
+	int user_id;
+	const User* user;
 public:
 	void load();
-	void load(User* user);
+	void load(const User* user);
+	void add(const std::string& product_id, int product_type);
+
 };

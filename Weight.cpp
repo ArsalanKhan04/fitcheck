@@ -3,7 +3,23 @@
 
 
 
+Weight::Weight() {
+    formal_weight = 0;
+    casual_weight = 0;
+    Semi_formal_weight = 0;
+    misc_weight = 0;
+    matching = 0;
+    contrast = 0;
+}
 
+Weight:: Weight(const Weight& other) {
+    formal_weight = other.formal_weight;
+    casual_weight = other.casual_weight;
+    Semi_formal_weight = other.Semi_formal_weight;
+    misc_weight = other.misc_weight;
+    matching = other.matching;
+    contrast = other.contrast;
+}
 
 Weight::Weight(Item& I1, Item& I2)
 {
@@ -76,3 +92,48 @@ Weight::Weight(Item& I1, Item& I2)
     contrast = log10(((double)1 / matching) + 100);
 
 }
+
+Weight Weight::operator+(const Weight& other) const {
+    Weight newWeight;
+    newWeight.casual_weight = casual_weight + other.casual_weight;
+    newWeight.formal_weight = formal_weight + other.formal_weight;
+    newWeight.Semi_formal_weight = Semi_formal_weight + other.Semi_formal_weight;
+    newWeight.misc_weight = misc_weight + other.misc_weight;
+    newWeight.matching = matching + other.matching;
+    newWeight.contrast = contrast + other.contrast;
+    return newWeight;
+}
+Weight Weight::operator/(int num) const {
+    Weight newWeight;
+    newWeight.casual_weight = casual_weight / num;
+    newWeight.formal_weight = formal_weight /num ;
+    newWeight.Semi_formal_weight = Semi_formal_weight / num;
+    newWeight.misc_weight = misc_weight / num;
+    newWeight.matching = matching / num;
+    newWeight.contrast = contrast / num;
+    return newWeight;
+}
+int Weight::getFormalWeight() const {
+    return formal_weight;
+}
+
+int Weight::getCasualWeight() const {
+    return casual_weight;
+}
+
+int Weight::getSemiFormalWeight() const {
+    return Semi_formal_weight;
+}
+
+int Weight::getMiscWeight() const {
+    return misc_weight;
+}
+
+int Weight::getContrast() const {
+    return contrast;
+}
+
+int Weight::getMatching() const {
+    return matching;
+}
+
