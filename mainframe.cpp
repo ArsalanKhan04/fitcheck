@@ -3,6 +3,7 @@
 #include <wx\notebook.h>
 #include <wx\choicebk.h>
 #include <wx\statline.h>
+#include "signup.h"
 #include <type_traits>
 
 
@@ -182,17 +183,14 @@ EachElem::EachElem(wxPanel* panel, wxSizer* sizer, const wxString& title) {
 	colorView->Add(individualProductColor, wxSizerFlags().DoubleBorder().Center());
 	colorView->Add(individualProductColorImage, wxSizerFlags().DoubleBorder().Center());
 	colorPanel->SetSizer(colorView);
-
 	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center());
 	individualViewSizer->Add(individualProductBrand, wxSizerFlags().Center());
 	individualViewSizer->Add(colorPanel, wxSizerFlags().Center());
-
 	individualViewPanel->SetSizer(individualViewSizer);
 	sizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
 }
 
 void EachElem::switchPage(const Item* item) {
-
 	wxImage* newImage = new wxImage(item->getImageLinks()[0], wxBITMAP_TYPE_PNG);
 	newImage->Rescale(90, 120);
 	wxBitmap newBitmap(*newImage);
@@ -214,9 +212,12 @@ void EachElem::switchPage(const Item* item) {
 	wxBitmap bitmap(image);
 	individualProductColorImage->SetBitmap(bitmap);
 
-
 }
 
+wxButton* EachElem::getButton() {
+	return button;
+}
+/*
 
 wxPanel* eachElement(Item* item, wxPanel* parentPanel) {
 	wxPanel* panel = new wxPanel(parentPanel, wxID_ANY);
@@ -239,7 +240,7 @@ wxPanel* eachElement(Item* item, wxPanel* parentPanel) {
 	panel->SetSizer(sizer);
 	return panel;
 }
-
+*/
 SearchPage::SearchPage(Search* search, wxPanel* panel, wxSizer* sizer) {
 	this->search = search;
 	wxPanel* selectedPanel = new wxPanel(panel, wxID_ANY);
@@ -261,7 +262,6 @@ SearchPage::SearchPage(Search* search, wxPanel* panel, wxSizer* sizer) {
 	socksearch = new EachElem(selectedPanel2, selectedSizer2, "Socks");
 	footwearsearch = new EachElem(selectedPanel2, selectedSizer2, "Footwears");
 	pocketsquaresearch = new EachElem(selectedPanel2, selectedSizer2, "Pocketsquare");
-	
 	
 
 	selectedPanel1->SetSizer(selectedSizer1);
@@ -323,10 +323,38 @@ Search* SearchPage::getSearch() {
 	return search;
 }
 
+void MainFrame::logout(wxCommandEvent&) {
+	SignupFrame* frame = new SignupFrame(wxT("Sign Up"));
+	frame->Show(true);
+	Close();
+}
 
-MainFrame::MainFrame(const wxString& title, const User* user) :
+void MainFrame::refresh(wxCommandEvent&) {
+	MainFrame* mainframe = new MainFrame(wxT("FITcheck"), user);
+	// Show it
+	mainframe->Show(true);
+	Close();
+}
+
+
+
+MainFrame::MainFrame(const wxString& title, User* user) :
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(1200,700))
 {
+	this->user = user;
+	wxMenuBar* menuBar = new wxMenuBar;
+	wxMenu* fileMenu = new wxMenu;
+	wxMenuItem* logout = new wxMenuItem(fileMenu, wxID_ANY, "&Logout");
+	wxMenuItem* hardRefresh = new wxMenuItem(fileMenu, wxID_ANY, "&Refresh");
+
+	fileMenu->Append(logout);
+	fileMenu->Append(hardRefresh);
+	menuBar->Append(fileMenu, "&Menu");
+
+	Bind(wxEVT_MENU, &MainFrame::logout, this, logout->GetId());
+	Bind(wxEVT_MENU, &MainFrame::refresh, this, hardRefresh->GetId());
+
+	SetMenuBar(menuBar);
 	wxLogMessage(wxString(user->getname()));
 
 	alldata = new Data;
@@ -562,15 +590,34 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 
 	// ================ SEARCH PAGE HERE ===============
 
+	
 	wxPanel* searchButtonPanel = new wxPanel(searchPanel, wxID_ANY);
 	wxBoxSizer* searchButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxButton* refresh = new wxButton(searchButtonPanel, wxID_ANY, wxT("Refresh"));
+	
+	wxStaticText* comboBoxLabel = new wxStaticText(searchButtonPanel, wxID_ANY, wxT("How Formal: "));
+	wxStaticText* comboBox2Label = new wxStaticText(searchButtonPanel, wxID_ANY, wxT("Sort By: "));
+	wxComboBox* comboBox = new wxComboBox(searchButtonPanel, wxID_ANY, wxT("How Formal?"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY);
+	wxComboBox* comboBox2 = new wxComboBox(searchButtonPanel, wxID_ANY, wxT("Sort By"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY);
+
 	wxButton* complete = new wxButton(searchButtonPanel, wxID_ANY, wxT("Complete Outfit!"));
-	searchButtonSizer->Add(complete, wxSizerFlags().DoubleHorzBorder());
+
+
+
 	searchButtonSizer->Add(refresh, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(comboBoxLabel, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(comboBox, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(comboBox2Label, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(comboBox2, wxSizerFlags().DoubleHorzBorder());
+	searchButtonSizer->Add(complete, wxSizerFlags().DoubleHorzBorder());
 	searchButtonPanel->SetSizer(searchButtonSizer);
-
-
+	comboBox->Append(wxT("Formal"));
+	comboBox->Append(wxT("Casual"));
+	comboBox->Append(wxT("Semi-Formal"));
+	comboBox->SetSelection(0);
+	comboBox2->Append(wxT("Match"));
+	comboBox2->Append(wxT("Contrast"));
+	comboBox2->SetSelection(0);
 
 	searchSizer->Add(searchButtonPanel, wxSizerFlags().DoubleBorder());
 	searchpage = new SearchPage(search, searchPanel, searchSizer);
@@ -581,8 +628,8 @@ MainFrame::MainFrame(const wxString& title, const User* user) :
 		searchpage->refreshSearch();
 		});
 
-	complete->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
-		ResultFrame* resultframe = new ResultFrame("Results", search->completeOutfit(formal));
+	complete->Bind(wxEVT_BUTTON, [this, comboBox, comboBox2](wxCommandEvent& evt) {
+		ResultFrame* resultframe = new ResultFrame("Results", search->completeOutfit(comboBox->GetSelection() + 1, comboBox2->GetSelection()));
 		resultframe->Show(true);
 		});
 

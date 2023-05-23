@@ -142,7 +142,7 @@ identification Jeans::whatAmI() const
     return bottom;
 }
 int Jeans::getApparel() const {
-    return app_formalshirts;
+    return app_jeans;
 }
 identification PocketSquare::whatAmI() const
 {
@@ -207,7 +207,7 @@ type Belts::WhatType() const
 
 type CasualShirts::WhatType() const
 {
-    return casual;
+    return semi_formal;
 }
 
 type Chinos::WhatType() const

@@ -51,11 +51,16 @@ private:
 	wxStaticText* individualProductColor;
 	wxStaticBitmap* individualProductColorImage;
 
+
 	wxPanel* colorPanel;
 	wxBoxSizer* colorView;
+
+	wxButton* button;
+
 public:
 	EachElem(wxPanel* panel, wxSizer* sizer, const wxString& title);
 	void switchPage(const Item*);
+	wxButton* getButton();
 };
 
 wxPanel* eachElement(Item* item, wxPanel* parentPanel);
@@ -83,12 +88,14 @@ private:
 class MainFrame : public wxFrame
 {
 public:
-	MainFrame(const wxString& title, const User* user);
+	MainFrame(const wxString& title, User* user);
 	Data* alldata;
 	Wardrobe* wardrobe;
 	Search* search;
 	SearchPage* searchpage;
 	vector<Item*> searchpageitems;
+	User* user;
 private:
-
+	void logout(wxCommandEvent&);
+	void refresh(wxCommandEvent&);
 };

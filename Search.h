@@ -24,6 +24,8 @@ private:
 	Item* outfit_socks;
 	Item* outfit_footwears;
 	Item* outfit_pocketsquare;
+
+    Weight weight;
     int outfittype;
 public:
 	Outfit();
@@ -47,8 +49,9 @@ public:
     Item* getFootwears() const;
     void setPocketSquare(Item* newPocketSquare);
     Item* getPocketSquare() const;
-    Weight* calculateweight();
 
+    void setWeight(Weight weight);
+    Weight getWeight() const;
     void addItem(Item*);
 
 
@@ -71,7 +74,7 @@ class Search: public Outfit
     //bool compareContrast(Outfit*, Outfit*);
     // bool compareMatch(Outfit*, Outfit*);
 public:
-    std::vector <Outfit*> completeOutfit(int formal_type);
+    std::vector <Outfit*> completeOutfit(int formal_type, int compare_type);
     Search();
     // std::vector <Outfit*> getOutfitList() const;
     // std::vector <Outfit*> getOutfitListContrast() const;

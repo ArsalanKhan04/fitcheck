@@ -99,17 +99,11 @@ Item* Outfit::getPocketSquare() const {
     return outfit_pocketsquare;
 }
 
-Weight* Outfit::calculateweight() {
-    Weight* weight = nullptr;
-    if (outfittype == 0) {
-        throw std::invalid_argument("The Outfit has yet not been completely Set!!");
-    }
-    else if (outfittype == STFS) {
-        weight = new Weight((Weight(*outfit_suit, *outfit_top) + Weight(*outfit_suit, *outfit_footwears) + Weight(*outfit_footwears, *outfit_socks))/3);
-    }
-    else if (outfittype == BTBFS) {
-        weight = new Weight((Weight(*outfit_blazers, *outfit_top) + Weight(*outfit_top, *outfit_bottom) + Weight(*outfit_bottom, *outfit_footwears) + Weight(*outfit_footwears, *outfit_socks)));
-    }
+
+void Outfit::setWeight(Weight weight) {
+    this->weight = weight;
+}
+Weight Outfit::getWeight() const {
     return weight;
 }
 
@@ -180,12 +174,24 @@ void Outfit::addItem(Item* item) {
 
 }
 
+
+bool compareContrast(Outfit* a, Outfit* b) {
+    return a->getWeight().getContrast() < b->getWeight().getContrast();
+}
+
+bool compareMatch(Outfit* a, Outfit* b) {
+    return a->getWeight().getMatching() < b->getWeight().getMatching();
+}
+
+
+
+
 Search::Search() {
     alldata = new Data;
     alldata->load();
 }
 
-std::vector <Outfit*> Search::completeOutfit(int formal_type) {
+std::vector <Outfit*> Search::completeOutfit(int formal_type, int compare_type) {
 
     std::vector <Outfit*> outfitList;
     Outfit* eachoutfit;
@@ -218,6 +224,7 @@ std::vector <Outfit*> Search::completeOutfit(int formal_type) {
                     eachoutfit = new Outfit();
                     eachoutfit->setTop(eachTop);
                     eachoutfit->setSuit(eachSuit);
+                    eachoutfit->setWeight(Weight(*eachTop, *eachSuit));
                     outfitList.push_back(eachoutfit);
                 }
             }
@@ -249,6 +256,8 @@ std::vector <Outfit*> Search::completeOutfit(int formal_type) {
                             eachoutfit->setTop(eachTop);
                             eachoutfit->setBlazers(eachBlazer);
                             eachoutfit->setBottom(eachBottom);
+
+                            eachoutfit->setWeight((Weight(*eachTop, *eachBlazer) + Weight(*eachTop, *eachBottom) + Weight(*eachBottom, *eachBlazer)) / 3);
                             outfitList.push_back(eachoutfit);
                         }
                     }
@@ -258,7 +267,8 @@ std::vector <Outfit*> Search::completeOutfit(int formal_type) {
 
     }
     else if (formal_type == casual) {
-        if (haveSuit()) {
+        if (haveBottom()) {
+
             bottoms.push_back(getBottom());
         }
         else {
@@ -266,6 +276,7 @@ std::vector <Outfit*> Search::completeOutfit(int formal_type) {
                 bottoms.push_back(eachbottom);
             }
         }
+
         for (Item* eachTop : tops) {
             for (Item* eachBottom : bottoms) {
                 if (eachTop->WhatType() == formal) {
@@ -274,17 +285,28 @@ std::vector <Outfit*> Search::completeOutfit(int formal_type) {
                         eachoutfit->setTop(eachTop);
                         eachoutfit->setBottom(eachBottom);
                         outfitList.push_back(eachoutfit);
+
+                        eachoutfit->setWeight(Weight(*eachTop, *eachBottom));
                     }
                 }
             }
         }
+
     }
+    /*
     for (Outfit* x : outfitList) {
         std::string message = x->getSuit()->getProductTitle();
         message += " ";
         message += x->getTop()->getProductTitle();
         wxString wxMessage = wxString::FromUTF8(message.c_str());
         wxLogMessage(wxMessage);
+    }
+    */
+    if (compare_type == 0) {
+        std::sort(outfitList.begin(), outfitList.end(), compareMatch);
+    }
+    else {
+        std::sort(outfitList.begin(), outfitList.end(), compareContrast);
     }
     return outfitList;
     /*
