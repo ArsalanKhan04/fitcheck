@@ -32,7 +32,9 @@ class ItemPages {
 public:
 	template <class T>
 	ItemPages(const std::vector<T*, std::allocator<T*>>& itemvec, wxPanel* panel, wxSizer* sizer, Wardrobe* ward, Search* search);
+
 private:
+	Search* search;
 	IndividualPage* rightPage;
 };
 
@@ -70,6 +72,7 @@ public:
 	SearchPage(Search* search, wxPanel* panel, wxSizer* sizer);
 	void refreshSearch();
 	Search* getSearch();
+	void setSearch(Search* search);
 private:
 	Search* search;
 	EachElem* topsearch;

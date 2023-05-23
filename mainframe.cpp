@@ -33,10 +33,10 @@ IndividualPage::IndividualPage(wxPanel* panel, wxSizer* sizer) {
 	colorView->Add(individualProductColorImage, wxSizerFlags().DoubleBorder().Center());
 	colorPanel->SetSizer(colorView);
 
-	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center().DoubleBorder());
-	individualViewSizer->Add(individualProductPrice, wxSizerFlags().Center().DoubleBorder());
-	individualViewSizer->Add(individualProductBrand, wxSizerFlags().Center().DoubleBorder());
-	individualViewSizer->Add(colorPanel, wxSizerFlags().Center().DoubleBorder());
+	individualViewSizer->Add(individualProductTitle, wxSizerFlags().Center());
+	individualViewSizer->Add(individualProductPrice, wxSizerFlags().Center());
+	individualViewSizer->Add(individualProductBrand, wxSizerFlags().Center());
+	individualViewSizer->Add(colorPanel, wxSizerFlags().Center());
 
 	individualViewPanel->SetSizer(individualViewSizer);
 	sizer->Add(individualViewPanel, wxSizerFlags().CenterVertical().DoubleBorder());
@@ -69,6 +69,7 @@ void IndividualPage::switchPage(const Item* item) {
 
 
 }
+
 
 
 template <class T>
@@ -191,16 +192,35 @@ EachElem::EachElem(wxPanel* panel, wxSizer* sizer, const wxString& title) {
 }
 
 void EachElem::switchPage(const Item* item) {
-	wxImage* newImage = new wxImage(item->getImageLinks()[0], wxBITMAP_TYPE_PNG);
+	wxString itemlink= "";
+	wxString itemProductTitle = "";
+	wxString itemProductBrand = "";
+	wxString itemProductColor = "";
+	int itemColorHex = 0;
+	if (item == nullptr) {
+		itemlink = "preview.png";
+		itemProductTitle = "Product Title Here";
+		itemProductBrand = "Product Brand Here";
+		itemProductColor = "Product Color Here";
+		itemColorHex = 0x0;
+	}
+	else {
+		itemlink = item->getImageLinks()[0];
+		itemProductTitle = item->getProductTitle();
+		itemProductBrand = item->getBrand();
+		itemProductColor = item->getColor();;
+		itemColorHex = item->getColorHex();
+	}
+	wxImage* newImage = new wxImage(itemlink, wxBITMAP_TYPE_PNG);
 	newImage->Rescale(90, 120);
 	wxBitmap newBitmap(*newImage);
 	individual_bitmap->SetBitmap(newBitmap);
 
-	individualProductTitle->SetLabel(item->getProductTitle());
-	individualProductBrand->SetLabel(item->getBrand());
-	individualProductColor->SetLabel(item->getColor());
+	individualProductTitle->SetLabel(itemProductTitle);
+	individualProductBrand->SetLabel(itemProductBrand);
+	individualProductColor->SetLabel(itemProductColor);
 
-	int hex = item->getColorHex();
+	int hex = itemColorHex;
 	int red = (hex >> 16) & 0xFF;
 	int green = (hex >> 8) & 0xFF;
 	int blue = hex & 0xFF;
@@ -277,50 +297,34 @@ SearchPage::SearchPage(Search* search, wxPanel* panel, wxSizer* sizer) {
 }
 
 void SearchPage::refreshSearch() {
-	if (search->haveTop()) {
 		Item* top = search->getTop();
 		topsearch->switchPage(top);
-	}
-	if (search->haveSuit()) {
 		Item* suit = search->getSuit();
 		suitsearch->switchPage(suit);
-	}
-	if (search->haveBottom()) {
 		Item* bottom = search->getBottom();
 		bottomsearch->switchPage(bottom);
-	}
-	if (search->haveTie()) {
 		Item* tie = search->getTie();
 		tiesearch->switchPage(tie);
-	}
-	if (search->haveBelts()) {
 		Item* belts = search->getBelts();
 		beltsearch->switchPage(belts);
-	}
-	if (search->haveCufflinks()) {
 		Item* cufflinks = search->getCufflinks();
 		cufflinksearch->switchPage(cufflinks);
-	}
-	if (search->haveBlazers()) {
 		Item* blazers = search->getBlazers();
 		blazersearch->switchPage(blazers);
-	}
-	if (search->haveSocks()) {
 		Item* socks = search->getSocks();
 		socksearch->switchPage(socks);
-	}
-	if (search->haveFootwears()) {
 		Item* footwears = search->getFootwears();
 		footwearsearch->switchPage(footwears);
-	}
-	if (search->havePocketSquare()) {
 		Item* pocketsquare = search->getPocketSquare();
 		pocketsquaresearch->switchPage(pocketsquare);
-	}
 }
 
 Search* SearchPage::getSearch() {
 	return search;
+}
+
+void SearchPage::setSearch(Search* search) {
+	this->search = search;
 }
 
 void MainFrame::logout(wxCommandEvent&) {
@@ -341,6 +345,7 @@ void MainFrame::refresh(wxCommandEvent&) {
 MainFrame::MainFrame(const wxString& title, User* user) :
 	wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(1200,700))
 {
+
 	this->user = user;
 	wxMenuBar* menuBar = new wxMenuBar;
 	wxMenu* fileMenu = new wxMenu;
@@ -601,7 +606,7 @@ MainFrame::MainFrame(const wxString& title, User* user) :
 	wxComboBox* comboBox2 = new wxComboBox(searchButtonPanel, wxID_ANY, wxT("Sort By"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY);
 
 	wxButton* complete = new wxButton(searchButtonPanel, wxID_ANY, wxT("Complete Outfit!"));
-
+	wxButton* reset = new wxButton(searchButtonPanel, wxID_ANY, wxT("Reset!"));
 
 
 	searchButtonSizer->Add(refresh, wxSizerFlags().DoubleHorzBorder());
@@ -610,6 +615,8 @@ MainFrame::MainFrame(const wxString& title, User* user) :
 	searchButtonSizer->Add(comboBox2Label, wxSizerFlags().DoubleHorzBorder());
 	searchButtonSizer->Add(comboBox2, wxSizerFlags().DoubleHorzBorder());
 	searchButtonSizer->Add(complete, wxSizerFlags().DoubleHorzBorder());
+
+	searchButtonSizer->Add(reset, wxSizerFlags().DoubleHorzBorder());
 	searchButtonPanel->SetSizer(searchButtonSizer);
 	comboBox->Append(wxT("Formal"));
 	comboBox->Append(wxT("Casual"));
@@ -625,6 +632,12 @@ MainFrame::MainFrame(const wxString& title, User* user) :
 	
 
 	refresh->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
+		searchpage->refreshSearch();
+		});
+
+	reset->Bind(wxEVT_BUTTON, [this](wxCommandEvent& evt) {
+		*search = Search();
+		searchpage->setSearch(search);
 		searchpage->refreshSearch();
 		});
 

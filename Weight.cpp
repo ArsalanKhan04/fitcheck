@@ -88,8 +88,8 @@ Weight::Weight(Item& I1, Item& I2)
         misc_weight = 10;
     }
 
-    matching = (double)log10(sqrt((pow(I1 - I2, 2)) + 100) * 10000000000000);
-    contrast = log10(((double)1 / matching) + 100);
+    matching = sqrt((pow(I1 - I2, 2)) + 100);
+    contrast = (255 * 255 * 255) + 500 - matching;;
 
 }
 
